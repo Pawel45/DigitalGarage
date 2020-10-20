@@ -61,8 +61,6 @@ export default {
         { manu: 'Audi', value: '0' },
         { manu: 'BMW', value: '1' },
         { manu: 'Mercedes', value: '2' },
-        { manu: 'California', value: '3' },
-        { manu: 'New York', value: '4' },
       ],
 
       models: [
