@@ -28,7 +28,7 @@
     <!-- END -->
 
 
-    <v-toolbar class="primary toolbar">
+    <v-toolbar class="toolbar">
 
       <!-- Hamburger menu for small devices -->
       <v-app-bar-nav-icon 
@@ -82,7 +82,7 @@ export default {
   }
 }
 
-  .primary{
+  .toolbar{
     background-color: #1f3e74 !important;
   }
 </style>
