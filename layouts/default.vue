@@ -83,6 +83,6 @@ export default {
 }
 
   .primary{
-    background-color: $primary !important;
+    background-color: #1f3e74 !important;
   }
 </style>
