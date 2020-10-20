@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <v-container style="max-width: 1200px !important; margin: auto;">
-      <v-layout row wrap class="pa-2 my-6"> 
+      <v-layout row wrap class="pa-2 my-6 fl1" > 
         <h1 class="head_title">Vyhledat Auto</h1>
       </v-layout>
       <v-layout row class="search"> 
@@ -11,7 +11,7 @@
               <h2 class="title">Vyberte Auto</h2>
             </v-flex>
             <v-flex class="pa-3">
-              <p class="description">Get the straight story from our experts and real-world feedback from consumers like you.</p>
+              <p class="description">Podívejte se na již udělané auta a nechte se inspirovat.</p>
             </v-flex>
             <v-flex class="pa-3">
               <v-select
@@ -55,29 +55,42 @@
 export default {
   data(){
     return {
-      select: { manu: 'Audi', value: '0' },
+      select: { manu: 'Alfa Romeo', value: '0' },
 
       manufacturers: [
-        { manu: 'Audi', value: '0' },
-        { manu: 'BMW', value: '1' },
-        { manu: 'Mercedes', value: '2' },
+        { manu: 'Alfa Romeo', value: '0' },
+        { manu: 'Audi', value: '1' },
+        { manu: 'BMW', value: '2' },
       ],
 
       models: [
-        {
-          manu: "Audi",
+        {manu: "Alfa Romeo",
+          options: [
+            "147 (2001-2005)",
+            "147 (2005+)",
+            "156 (1997-2003)",
+            "156 II (2002-2005)",
+            "159 (2005+)",
+            "166 (1999-2002)",
+            "166 II (2003-2010)",
+            "()",
+            "2()",
+            "3()",
+            "4()",
+            "5()",
+            "6()",
+
+          ]},
+        {manu: "Audi",
           options: [
             "A3",
             "A4"
-          ]
-        },
-        {
-          manu: "BMW",
+          ]},
+        { manu: "BMW",
           options: [
             "E36",
             "E46"
-          ]
-        },
+          ]},
 
 
       ],
@@ -105,6 +118,15 @@ export default {
     font-family: 'Montserrat', sans-serif !important;
     font-size: 60px;
     font-weight: 800;
+  }
+  @media (max-width: 600px){
+    .head_title{
+      font-size: 36px;
+      text-align: center;
+    }
+    .fl1{
+      justify-content: center;
+    }
   }
   
   .search{
