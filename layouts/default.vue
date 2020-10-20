@@ -46,7 +46,7 @@
       <v-toolbar-items
       class="hidden-xs-only"
       v-for="(item, i) in items.slice().reverse()" :key="i">
-          <v-btn depressed class="primary" :to="item.to">
+          <v-btn depressed style="background-color: #1f3e74 !important;" :to="item.to">
             {{ item.text }}
             </v-btn>
       </v-toolbar-items>
