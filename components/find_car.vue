@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <v-container>
+    <v-container style="max-width: 1200px !important; margin: auto;">
       <v-layout row wrap class="pa-2 my-6"> 
         <h1 class="head_title">Vyhledat Auto</h1>
       </v-layout>
