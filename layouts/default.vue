@@ -62,6 +62,7 @@ export default {
     },
   data () {
     return {
+      item:"",
       sideNav: false,
       items: [
         { text: 'Přidat auto', icon: 'mdi-plus', to: '/cars/add'},
