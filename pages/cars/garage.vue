@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <main>
+    <main style="">
       <p>
         garage Page
       </p>
@@ -11,6 +11,7 @@
 <script>
 
 export default {
+  layout: 'default',
   components: {
   }
 }

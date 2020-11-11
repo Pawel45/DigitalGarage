@@ -84,6 +84,6 @@ export default {
 }
 
   .toolbar{
-    background-color: #1f3e74 !important;
+    background-color: $primary !important;
   }
 </style>

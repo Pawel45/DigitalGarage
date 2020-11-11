@@ -1,10 +1,10 @@
 <template>
   <div id="app">
-    <v-container style="max-width: 1200px !important; margin: auto;">
+    <v-container style="max-width: 70% !important; margin: auto;">
       <v-layout row wrap class="pa-2 my-6 fl1" > 
         <h1 class="head_title">Vyhledat Auto</h1>
       </v-layout>
-      <v-layout row class="search"> 
+      <v-layout row class="search" style="border-radius: 5px;"> 
         <v-flex sm6 class="search_car">
           <v-layout column wrap>
             <v-flex class="pa-3 pt-0">
@@ -44,6 +44,7 @@
         <v-flex sm6 class="justify-center select_image_flex">
           <div class="select_image"></div>
         </v-flex>
+        
       </v-layout>
     </v-container>
   </div>
@@ -129,7 +130,7 @@ export default {
     }
   }
   
-  .search{
+  .search{    
     background-color: #2b5195;
     border-radius: 4px;
     min-height: 300px;
@@ -172,6 +173,7 @@ export default {
     background: url(https://file.kbb.com/kbb/images/Owners/owners-hero-img.png) center center / contain no-repeat, rgb(43, 81, 149);
     background-position: center center;
     background-repeat: no-repeat; 
-    height: 100%;   
+    height: 100%; 
+    border-radius: 4px !important;  
   }
 </style>
