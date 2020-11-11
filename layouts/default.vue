@@ -8,7 +8,7 @@
       temporary>
       <v-list>
         <v-list-item-group
-        v-model="item"
+        
         >
           <v-list-item
             v-for="(item, i) in items"
@@ -62,7 +62,7 @@ export default {
     },
   data () {
     return {
-      item:"",
+      
       sideNav: false,
       items: [
         { text: 'Přidat auto', icon: 'mdi-plus', to: '/cars/add'},
@@ -80,6 +80,7 @@ export default {
   @media only screen and (min-width: 1264px) {
   .toolbar {
     padding: 0 13% !important;
+    flex: 0;
   }
 }
 

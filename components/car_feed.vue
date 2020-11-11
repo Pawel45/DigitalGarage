@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div>
       <div style="width:100%; background-color: #F2F2F2; padding-bottom: 30px;">
           <v-container id="main_container_car_feed" style="max-width: 70% !important; margin: auto;">
             <v-layout row wrap class="pa-2 my-6 fl1"> 
@@ -70,10 +70,6 @@ export default {
 
 <style lang="css" scoped>
   @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@800&display=swap');
-
-    body{
-        background-color: lawngreen;
-    }
 
     .head_title{
         font-family: 'Montserrat', sans-serif !important;

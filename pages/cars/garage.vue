@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <main style="">
+    <main>
       <p>
         garage Page
       </p>
@@ -11,12 +11,11 @@
 <script>
 
 export default {
-  layout: 'default',
   components: {
   }
 }
 </script>
 
-<style lang="css" scoped>
+<style lang="scss" scoped>
   
 </style>
