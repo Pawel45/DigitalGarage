@@ -1,7 +1,7 @@
 <template>
   <div>
       <div style="width:100%; background-color: #F2F2F2; padding-bottom: 30px;">
-          <v-container grid-list-md id="main_container_car_feed" style="max-width: 70% !important; margin: auto;">
+          <v-container id="main_container" grid-list-md>
             <v-layout row wrap class="pa-2 my-6 fl1"> 
                 <v-spacer></v-spacer>
                 <h1 class="head_title">Lidem se líbí</h1>
@@ -75,6 +75,24 @@ export default {
 
     .head_title{
         font-family: 'Montserrat', sans-serif !important;
+    }
+    
+    #main_container{
+        max-width: 70%;
+        margin: auto;
+        
+    }
+
+    @media only screen and (max-width: 1600px) {
+        #main_container {
+            max-width: 80% !important;
+        }
+    }
+
+    @media only screen and (max-width: 1000px) {
+        #main_container {
+            max-width: 90% !important;
+        }
     }
 
 </style>

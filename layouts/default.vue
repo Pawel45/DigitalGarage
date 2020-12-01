@@ -129,4 +129,5 @@ export default {
   .primary-color{
     background-color: $primary !important;
   }
+
 </style>

@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <v-container style="max-width: 70% !important; margin: auto;">
+    <v-container id="main_container">
       <v-layout row wrap class="pa-2 my-6 fl1" > 
         <h1 class="head_title">Vyhledat Auto</h1>
       </v-layout>
@@ -108,6 +108,23 @@ export default {
     background-repeat: repeat-x;
     background-size: 1800px;
     min-height: 400px;
+  }
+
+  #main_container{
+    max-width: 70%;
+    margin: auto;
+  }
+
+  @media only screen and (min-width: 0px) and (max-width: 1000px) {
+    #main_container {
+        max-width: 90% !important;
+    }
+  }
+
+  @media only screen and (min-width: 1001px) and (max-width: 1600px) {
+    #main_container {
+        max-width: 80% !important;
+    }
   }
 
   .head_title{
