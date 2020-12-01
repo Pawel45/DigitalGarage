@@ -28,7 +28,7 @@
     <!-- END -->
 
 
-    <v-toolbar class="toolbar">
+    <v-toolbar class="toolbar primary-color">
 
       <!-- Hamburger menu for small devices -->
       <v-app-bar-nav-icon 
@@ -46,12 +46,45 @@
       <v-toolbar-items
       class="hidden-xs-only"
       v-for="(item, i) in items.slice().reverse()" :key="i">
-          <v-btn depressed style="background-color: #1f3e74 !important; color: white;" :to="item.to">
+          <v-btn depressed class="primary-color" style="color: white;" :to="item.to">
             {{ item.text }}
             </v-btn>
       </v-toolbar-items>
     </v-toolbar>
     <nuxt/>
+    
+    <v-footer dark padless>
+    <v-card
+      flat
+      tile
+      class="indigo white--text text-center primary-color" style="width:100%;">
+      <v-card-text>
+        <v-btn
+          v-for="icon in icons"
+          :key="icon.id"
+          class="mx-4 white--text"
+          icon>
+          <a :href="icon.link" style="text-decoration: none; color: white; ">
+            <v-icon size="24px">
+            {{ icon.name }}
+            </v-icon>
+          </a>
+          
+        </v-btn>
+      </v-card-text>
+
+      <v-card-text class="white--text pt-0">
+        Vytvořeno jako maturitní projekt.
+      </v-card-text>
+
+      <v-divider></v-divider>
+
+      <v-card-text class="white--text">
+        {{ new Date().getFullYear() }} — <strong>Pavel Pel</strong>
+      </v-card-text>
+    </v-card>
+  </v-footer>
+
   </v-app>
 </template>
 
@@ -68,6 +101,16 @@ export default {
         { text: 'Přidat auto', icon: 'mdi-plus', to: '/cars/add'},
         { text: 'Moje garáž', icon: 'mdi-car', to: '/cars/garage'},
       ],
+      icons: [
+        {
+          name: "mdi-facebook",
+          link: "https://www.facebook.com/pavel.pel/",
+        },
+        {
+          name: "mdi-instagram",
+          link: "https://www.instagram.com/pavel.pel/",
+        },
+      ],
       
     }
   }
@@ -83,8 +126,7 @@ export default {
     flex: 0;
   }
 }
-
-  .toolbar{
+  .primary-color{
     background-color: $primary !important;
   }
 </style>

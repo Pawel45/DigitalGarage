@@ -19,8 +19,7 @@
               item-text="manu"
               item-value="value"
               label="Značka" 
-              v-model="select"
-              :hint="`${select.manu}, ${select.value}`"
+              v-model="selectedManufacturer"
               persistent-hint
               return-object
               single-line
@@ -29,12 +28,12 @@
           >
               </v-select>
               <v-select
-              :items="models[select.value].options" 
+              :items="models[selectedManufacturer.value].options" 
               label="Model" 
               dense
               solo 
               v-model="selectedModel" 
-              v-if="select != ''">
+              v-if="selectedManufacturer != ''">
               </v-select>
               <v-btn style="width:100%">Vyhledat</v-btn>
             </v-flex>
@@ -56,7 +55,8 @@
 export default {
   data(){
     return {
-      select: { manu: 'Alfa Romeo', value: '0' },
+      selectedManufacturer: { manu: 'Alfa Romeo', value: '0' },
+      selectedModel: "",
 
       manufacturers: [
         { manu: 'Alfa Romeo', value: '0' },
@@ -87,17 +87,12 @@ export default {
             "A3",
             "A4"
           ]},
-        { manu: "BMW",
+        {manu: "BMW",
           options: [
             "E36",
             "E46"
           ]},
-
-
-      ],
-
-      selectedManufacturer: "",
-      selectedModel: "",
+        ]
     }
   }
 }

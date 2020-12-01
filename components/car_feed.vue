@@ -1,7 +1,7 @@
 <template>
   <div>
       <div style="width:100%; background-color: #F2F2F2; padding-bottom: 30px;">
-          <v-container id="main_container_car_feed" style="max-width: 70% !important; margin: auto;">
+          <v-container grid-list-md id="main_container_car_feed" style="max-width: 70% !important; margin: auto;">
             <v-layout row wrap class="pa-2 my-6 fl1"> 
                 <v-spacer></v-spacer>
                 <h1 class="head_title">Lidem se líbí</h1>
@@ -53,6 +53,9 @@
                     </v-card>
                 </v-flex>
             </v-layout>
+            <v-layout row justify-center mt-2>
+                <v-btn color="#1f3e74 !important" dark to="cars/add">Přidej si své</v-btn>
+            </v-layout>  
         </v-container>
       </div>
   </div>
