@@ -66,7 +66,7 @@
               accept="image/*"
               prepend-icon="mdi-camera"
               truncate-length="36"
-              style="width: 30%; min-width: 250px;"
+              style="width: 30%; min-width: 220px;"
             ></v-file-input>
 
             <v-btn :disabled="files == ''" @click="e6 = 3" color="primary">Pokračovat</v-btn>
@@ -77,7 +77,7 @@
           <!-- STEP 3 -->
           <v-stepper-step :complete="e6 > 3" step="3">Uveďte doplňující informace</v-stepper-step>
 
-          <v-stepper-content step="3" style="min-width: 38 0px; width: 30%">
+          <v-stepper-content step="3" style="min-width: 220px; width: 30%">
 
             <h4>Napište vše, co víte o svém vozidle.</h4>          
             <v-textarea v-model="text" label="Informace"></v-textarea>
