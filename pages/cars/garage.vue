@@ -4,8 +4,19 @@
       <v-layout row wrap class="pa-2 my-6 fl1">
         <h1 class="head_title">Moje Garáž</h1>
       </v-layout>
-      <v-layout row>
-        <h2>hello</h2>
+      <v-layout column text-center align-center>
+        <v-flex>
+          <h3>Zadejte e-mail, se kterým jste si své vozidlo spojili.</h3>
+          <v-text-field
+        label="e-mail:"
+        style="min-width: 200px"
+        > 
+        </v-text-field>
+        </v-flex>
+        <v-flex>
+          <v-btn>Ukázat vozidla</v-btn>
+        </v-flex>
+        
       </v-layout>
     </v-container>
   </v-app>

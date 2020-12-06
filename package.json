@@ -11,7 +11,10 @@
   "dependencies": {
     "@nuxt/typescript-runtime": "^2.0.0",
     "core-js": "^3.6.5",
-    "nuxt": "^2.14.6"
+    "filepond": "^4.23.1",
+    "handy-uploader": "^1.1.4",
+    "nuxt": "^2.14.6",
+    "vue-filepond": "^6.0.3"
   },
   "devDependencies": {
     "@nuxt/types": "^2.14.6",
