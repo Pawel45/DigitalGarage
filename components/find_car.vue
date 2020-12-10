@@ -39,7 +39,7 @@
                 v-model="selectedModel"
                 v-if="selectedManufacturer != ''"
               ></v-select>
-              <v-btn style="width: 100%">Vyhledat</v-btn>
+              <v-btn to="/cars" style="width: 100%">Vyhledat</v-btn>
             </v-flex>
           </v-layout>
         </v-flex>

@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <v-app id="app">
     <v-container id="main_container">
       <v-layout row wrap class="pa-2 my-6 fl1">
         <h1 class="head_title">Přidat Auto</h1>
@@ -77,7 +77,7 @@
           <!-- STEP 3 -->
           <v-stepper-step :complete="e6 > 3" step="3">Uveďte doplňující informace</v-stepper-step>
 
-          <v-stepper-content step="3" style="min-width: 220px; width: 30%">
+          <v-stepper-content step="3" style="min-width: 320px; width: 30%">
 
             <h4>Napište vše, co víte o svém vozidle.</h4>          
             <v-textarea v-model="text" label="Informace"></v-textarea>
@@ -197,6 +197,14 @@ export default {
 
 <style lang="scss" scoped>
   @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@800&display=swap');
+
+  #app {
+    background-image: url("https://file.kbb.com/kbb/images/PageBackground/SVG/cityscape-2a.svg");
+    background-position: center;
+    background-repeat: repeat-x;
+    background-size: 1800px;
+    min-height: 400px;
+  }
 
   #main_container{
     max-width: 70%;
