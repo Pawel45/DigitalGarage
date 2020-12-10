@@ -77,7 +77,11 @@
           <!-- STEP 3 -->
           <v-stepper-step :complete="e6 > 3" step="3">Uveďte doplňující informace</v-stepper-step>
 
+<<<<<<< HEAD
           <v-stepper-content step="3" style="min-width: 320px; width: 30%">
+=======
+          <v-stepper-content step="3" style="min-width: 220px; width: 30%">
+>>>>>>> master
 
             <h4>Napište vše, co víte o svém vozidle.</h4>          
             <v-textarea v-model="text" label="Informace"></v-textarea>
