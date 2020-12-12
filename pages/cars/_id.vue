@@ -8,7 +8,7 @@
       </v-layout>
       <v-layout row>
         <v-flex hidden-lg-and-up lg7>
-          <v-carousel hide-delimiters lg7 height="100%">
+          <v-carousel hide-delimiters cycle lg7 height="100%">
             <v-carousel-item
               v-for="(item, i) in images"
               :key="i"
