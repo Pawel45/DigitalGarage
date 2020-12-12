@@ -1,7 +1,7 @@
 <template>
   <v-app>
-      <SearchCars/>
-      <CarFeed/>
+    <SearchCars />
+    <CarFeed />
   </v-app>
 </template>
 
@@ -12,11 +12,10 @@ import CarFeed from "~/components/car_feed.vue";
 export default {
   components: {
     SearchCars,
-    CarFeed
-  }
-}
+    CarFeed,
+  },
+};
 </script>
 
 <style lang="css" scoped>
-
 </style>

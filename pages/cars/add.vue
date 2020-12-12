@@ -5,36 +5,27 @@
         <h1 class="head_title">Přidat Auto</h1>
       </v-layout>
       <v-layout row wrap class="">
-
-        <v-stepper
-          v-model="e6"
-          vertical
-          non-linear
-          style="width: 100%"
-        >
+        <v-stepper v-model="e6" vertical non-linear style="width: 100%">
           <!-- STEP 1 -->
-          <v-stepper-step
-            :complete="e6 > 1"
-            step="1"
-          >
+          <v-stepper-step :complete="e6 > 1" step="1">
             Vyberte značku a model auta
             <small></small>
           </v-stepper-step>
 
-          <v-stepper-content step="1">    
+          <v-stepper-content step="1">
             <v-select
-                :items="manufacturers"
-                item-text="manu"
-                item-value="value"
-                label="Značka"
-                v-model="selectedManufacturer"
-                return-object
-                single-line
-                dense
-                solo
-                style="width: 20%; min-width: 200px;"
-                @change="selectedModel =''"
-              >
+              :items="manufacturers"
+              item-text="manu"
+              item-value="value"
+              label="Značka"
+              v-model="selectedManufacturer"
+              return-object
+              single-line
+              dense
+              solo
+              style="width: 20%; min-width: 200px"
+              @change="selectedModel = ''"
+            >
             </v-select>
             <v-select
               :items="getModels(selectedManufacturer.value)"
@@ -46,16 +37,22 @@
               return-object
               v-model="selectedModel"
               v-if="selectedManufacturer != ''"
-              style="width: 20%; min-width: 200px;"
+              style="width: 20%; min-width: 200px"
             >
             </v-select>
 
-            <v-btn :disabled="selectedModel == ''" @click="e6 = 2" color="primary">Pokračovat</v-btn>
-
+            <v-btn
+              :disabled="selectedModel == ''"
+              @click="e6 = 2"
+              color="primary"
+              >Pokračovat</v-btn
+            >
           </v-stepper-content>
 
           <!-- STEP 2 -->
-          <v-stepper-step :complete="e6 > 2" step="2">Vyberte fotografie auta</v-stepper-step>
+          <v-stepper-step :complete="e6 > 2" step="2"
+            >Vyberte fotografie auta</v-stepper-step
+          >
 
           <v-stepper-content step="2">
             <v-file-input
@@ -66,76 +63,85 @@
               accept="image/*"
               prepend-icon="mdi-camera"
               truncate-length="36"
-              style="width: 30%; min-width: 220px;"
+              style="width: 30%; min-width: 220px"
             ></v-file-input>
 
-            <v-btn :disabled="files == ''" @click="e6 = 3" color="primary">Pokračovat</v-btn>
+            <v-btn :disabled="files == ''" @click="e6 = 3" color="primary"
+              >Pokračovat</v-btn
+            >
             <v-btn @click="e6 = 1" text>Zpět</v-btn>
-
           </v-stepper-content>
 
           <!-- STEP 3 -->
-          <v-stepper-step :complete="e6 > 3" step="3">Uveďte doplňující informace</v-stepper-step>
+          <v-stepper-step :complete="e6 > 3" step="3"
+            >Uveďte doplňující informace</v-stepper-step
+          >
 
           <v-stepper-content step="3" style="min-width: 320px; width: 30%">
-
-            <h4>Napište vše, co víte o svém vozidle.</h4>          
+            <h4>Napište vše, co víte o svém vozidle.</h4>
             <v-textarea v-model="text" label="Informace"></v-textarea>
 
-
-            <v-btn :disabled="text == '' " @click="e6 = 4" color="primary">Pokračovat</v-btn>
+            <v-btn :disabled="text == ''" @click="e6 = 4" color="primary"
+              >Pokračovat</v-btn
+            >
             <v-btn @click="e6 = 2" text>Zpět</v-btn>
-
           </v-stepper-content>
 
           <!-- STEP 4 -->
           <v-stepper-step step="4">Dokončení příspěvku</v-stepper-step>
 
           <v-stepper-content step="4">
-            <v-text-field v-model="email" :rules="[rules.required, rules.email]" label="E-mail" style="width: 30%; min-width: 220px;"></v-text-field>
-            <v-text-field 
-            :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
-            :rules="[rules.required, rules.min]"
-            :type="show ? 'text' : 'password'"
-            name=""
-            hint="Minimální délka 8 znaků"
-            counter
-            @click:append="show = !show"
-            v-model="password" 
-            label="Heslo (slouží k pozdější úpravě)" 
-            style="width: 30%; min-width: 220px;"></v-text-field>
+            <v-text-field
+              v-model="email"
+              :rules="[rules.required, rules.email]"
+              label="E-mail"
+              style="width: 30%; min-width: 220px"
+            ></v-text-field>
+            <v-text-field
+              :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
+              :rules="[rules.required, rules.min]"
+              :type="show ? 'text' : 'password'"
+              name=""
+              hint="Minimální délka 8 znaků"
+              counter
+              @click:append="show = !show"
+              v-model="password"
+              label="Heslo (slouží k pozdější úpravě)"
+              style="width: 30%; min-width: 220px"
+            ></v-text-field>
 
-            <v-btn :disabled="email == '' || password == '' || password.length < 8" @click="e6 = 1" color="primary">Vložit</v-btn>
+            <v-btn
+              :disabled="email == '' || password == '' || password.length < 8"
+              @click="e6 = 1"
+              color="primary"
+              >Vložit</v-btn
+            >
             <v-btn @click="e6 = 3" text>Zpět</v-btn>
-
           </v-stepper-content>
         </v-stepper>
-
       </v-layout>
     </v-container>
   </v-app>
 </template>
 
 <script>
-
 export default {
-  
-  data(){
-    return{
+  data() {
+    return {
       e6: 1,
       files: [],
-      text: '',
-      email: '',
-      password: '',
+      text: "",
+      email: "",
+      password: "",
       show: false,
       sumbit: false,
 
       rules: {
-        required: value => !!value || 'Nutné vyplnit.',
-        min: v => v.length >= 8 || 'Min 8 characters',
-        email: value => {
-            const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-            return pattern.test(value) || 'Neplatný e-mail.'
+        required: (value) => !!value || "Nutné vyplnit.",
+        min: (v) => v.length >= 8 || "Min 8 characters",
+        email: (value) => {
+          const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+          return pattern.test(value) || "Neplatný e-mail.";
         },
       },
 
@@ -206,7 +212,7 @@ export default {
         [{ name: "A3", value: "a3" }],
         [{ name: "E46", value: "e46" }],
       ],
-    }
+    };
   },
   methods: {
     getModels(index) {
@@ -217,50 +223,49 @@ export default {
       return result;
     },
   },
-}
+};
 </script>
 
 <style lang="scss" scoped>
-  @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@800&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@800&display=swap");
 
-  #app {
-    background-image: url("https://file.kbb.com/kbb/images/PageBackground/SVG/cityscape-2a.svg");
-    background-position: center;
-    background-repeat: repeat-x;
-    background-size: 1800px;
-    min-height: 400px;
+#app {
+  background-image: url("https://file.kbb.com/kbb/images/PageBackground/SVG/cityscape-2a.svg");
+  background-position: center;
+  background-repeat: repeat-x;
+  background-size: 1800px;
+  min-height: 400px;
+}
+
+#main_container {
+  max-width: 70%;
+}
+
+@media only screen and (min-width: 0px) and (max-width: 1000px) {
+  #main_container {
+    max-width: 90% !important;
   }
+}
 
-  #main_container{
-    max-width: 70%;
+@media only screen and (min-width: 1001px) and (max-width: 1600px) {
+  #main_container {
+    max-width: 80% !important;
   }
+}
 
-  @media only screen and (min-width: 0px) and (max-width: 1000px) {
-    #main_container {
-        max-width: 90% !important;
-    }
+.head_title {
+  font-family: "Montserrat", sans-serif !important;
+  font-size: 48px;
+  font-weight: 800;
+}
+
+@media (max-width: 600px) {
+  .head_title {
+    font-size: 24px;
+    text-align: center;
   }
-
-  @media only screen and (min-width: 1001px) and (max-width: 1600px) {
-    #main_container {
-        max-width: 80% !important;
-    }
+  .fl1 {
+    justify-content: center;
   }
-
-  .head_title{
-    font-family: 'Montserrat', sans-serif !important;
-    font-size: 48px;
-    font-weight: 800;
-  }
-
-  @media (max-width: 600px){
-    .head_title{
-      font-size: 24px;
-      text-align: center;
-    }
-    .fl1{
-      justify-content: center;
-    }
-  }
-
+}
 </style>
