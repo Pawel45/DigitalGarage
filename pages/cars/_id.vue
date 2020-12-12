@@ -1,26 +1,43 @@
 <template>
   <v-app>
-    <v-container id="main_container">
+    <v-container  id="main_container" grid-list-md>
       <v-layout row wrap class="pa-2 my-6 fl1">
         <h1 class="head_title">Audi A3</h1>
         <v-spacer></v-spacer>
-        <p>ID: {{this.$route.params.id}}</p>
+        <h4>ID: {{this.$route.params.id}}</h4>
       </v-layout>
       <v-layout row>
-        <v-flex>
-          <v-layout column>
-            <v-flex >
-              <img style="width: 100%;" src="https://audimediacenter-a.akamaihd.net/system/production/media/90567/images/72391bd2d21a80a761f0df1bd5bff197d5804daa/A201895_blog.jpg?1583155437" alt="">
-            </v-flex>
-            <v-flex text-center>
-              <img style="width: 147px;" src="https://audimediacenter-a.akamaihd.net/system/production/media/90567/images/72391bd2d21a80a761f0df1bd5bff197d5804daa/A201895_blog.jpg?1583155437" alt="">
-              <img style="width: 147px;" src="https://audimediacenter-a.akamaihd.net/system/production/media/90567/images/72391bd2d21a80a761f0df1bd5bff197d5804daa/A201895_blog.jpg?1583155437" alt="">
-              <img style="width: 147px;" src="https://audimediacenter-a.akamaihd.net/system/production/media/90567/images/72391bd2d21a80a761f0df1bd5bff197d5804daa/A201895_blog.jpg?1583155437" alt="">
+        <v-flex lg7>
+          <img style="width:100%" :src="myImage" alt="">
+        </v-flex>
+        <v-flex lg5>
+          <v-layout column wrap text-center>
+            <v-flex align-center>
+              <img style="width: 150px;" 
+              @mouseover="myImage = 'https://maxtondesign.com/eng_pl_Front-Splitter-V-1-Audi-S3-8P-FL-8512_2.jpg'" 
+              src="https://maxtondesign.com/eng_pl_Front-Splitter-V-1-Audi-S3-8P-FL-8512_2.jpg" alt="">
+              <img style="width: 150px;" 
+              @mouseover="myImage = 'https://i.ebayimg.com/images/g/9IYAAOSwd9hdk5Zv/s-l400.jpg'" 
+              src="https://i.ebayimg.com/images/g/9IYAAOSwd9hdk5Zv/s-l400.jpg" alt="">
+              <img style="width: 150px;" 
+              @mouseover="myImage = 'https://i.ytimg.com/vi/5z0xNPicHpk/maxresdefault.jpg'" 
+              src="https://i.ytimg.com/vi/5z0xNPicHpk/maxresdefault.jpg" alt="">
+              <img style="width: 150px;" 
+              @mouseover="myImage = 'https://i.ytimg.com/vi/5z0xNPicHpk/maxresdefault.jpg'" 
+              src="https://i.ytimg.com/vi/5z0xNPicHpk/maxresdefault.jpg" alt="">
+              <img style="width: 150px;" 
+              @mouseover="myImage = 'https://maxtondesign.com/eng_pl_Front-Splitter-V-1-Audi-S3-8P-FL-8512_2.jpg'" 
+              src="https://maxtondesign.com/eng_pl_Front-Splitter-V-1-Audi-S3-8P-FL-8512_2.jpg" alt="">
+              <img style="width: 150px;" 
+              @mouseover="myImage = 'https://i.ebayimg.com/images/g/9IYAAOSwd9hdk5Zv/s-l400.jpg'" 
+              src="https://i.ebayimg.com/images/g/9IYAAOSwd9hdk5Zv/s-l400.jpg" alt="">
             </v-flex>
           </v-layout>
         </v-flex>
+      </v-layout>
+      <v-layout row>
         <v-flex>
-          <h3>Rok výroby: 2004</h3>
+          <h2></h2>
         </v-flex>
       </v-layout>
     </v-container>
@@ -30,6 +47,11 @@
 <script>
 
 export default {
+  data(){
+    return{
+      myImage: 'https://static.driveto.cz/images/full/c/e/ce92e7c1-d625-4a62-9a5e-692770a9e352.jpg',
+    }
+  },
   components: {
   }
 }
