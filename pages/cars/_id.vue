@@ -13,6 +13,7 @@
               v-for="(item, i) in images"
               :key="i"
               :src="item.src"
+              :href="item.src"
             ></v-carousel-item>
           </v-carousel>
         </v-flex>
