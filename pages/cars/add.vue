@@ -89,11 +89,23 @@
           </v-stepper-content>
 
           <!-- STEP 4 -->
-          <v-stepper-step step="4">Náhled příspěvku</v-stepper-step>
+          <v-stepper-step step="4">Dokončení příspěvku</v-stepper-step>
 
           <v-stepper-content step="4">
+            <v-text-field v-model="email" :rules="[rules.required, rules.email]" label="E-mail" style="width: 30%; min-width: 220px;"></v-text-field>
+            <v-text-field 
+            :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
+            :rules="[rules.required, rules.min]"
+            :type="show ? 'text' : 'password'"
+            name=""
+            hint="Minimální délka 8 znaků"
+            counter
+            @click:append="show = !show"
+            v-model="password" 
+            label="Heslo (slouží k pozdější úpravě)" 
+            style="width: 30%; min-width: 220px;"></v-text-field>
 
-            <v-btn @click="e6 = 1" color="primary">Pokračovat</v-btn>
+            <v-btn :disabled="email == '' || password == '' || password.length < 8" @click="e6 = 1" color="primary">Vložit</v-btn>
             <v-btn @click="e6 = 3" text>Zpět</v-btn>
 
           </v-stepper-content>
@@ -113,6 +125,19 @@ export default {
       e6: 1,
       files: [],
       text: '',
+      email: '',
+      password: '',
+      show: false,
+      sumbit: false,
+
+      rules: {
+        required: value => !!value || 'Nutné vyplnit.',
+        min: v => v.length >= 8 || 'Min 8 characters',
+        email: value => {
+            const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+            return pattern.test(value) || 'Neplatný e-mail.'
+        },
+      },
 
       selectedManufacturer: { manu: "Alfa Romeo", value: "0" },
       selectedModel: "",

@@ -119,7 +119,7 @@ export default {
 
   @media (max-width: 600px){
     .head_title{
-      font-size: 24px;
+      font-size: 14px;
       text-align: center;
     }
     .fl1{
