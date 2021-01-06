@@ -18,7 +18,7 @@
               <v-card-subtitle>2.0TDi 103kW</v-card-subtitle>
               <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn color="#1f3e74" text>Prohlédnout</v-btn>
+                <v-btn to="cars/1" color="#1f3e74" text>Prohlédnout</v-btn>
               </v-card-actions>
             </v-card>
           </v-flex>
@@ -32,7 +32,7 @@
               <v-card-subtitle>2.0TDi 103kW</v-card-subtitle>
               <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn color="#1f3e74" text>Prohlédnout</v-btn>
+                <v-btn to="cars/2" color="#1f3e74" text>Prohlédnout</v-btn>
               </v-card-actions>
             </v-card>
           </v-flex>
@@ -46,7 +46,7 @@
               <v-card-subtitle>2.0TDi 103kW</v-card-subtitle>
               <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn color="#1f3e74" text>Prohlédnout</v-btn>
+                <v-btn to="cars/3" color="#1f3e74" text>Prohlédnout</v-btn>
               </v-card-actions>
             </v-card>
           </v-flex>
@@ -60,7 +60,7 @@
               <v-card-subtitle>2.0TDi 103kW</v-card-subtitle>
               <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn color="#1f3e74" text>Prohlédnout</v-btn>
+                <v-btn to="cars/4" color="#1f3e74" text>Prohlédnout</v-btn>
               </v-card-actions>
             </v-card>
           </v-flex>

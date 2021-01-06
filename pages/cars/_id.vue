@@ -7,6 +7,7 @@
         <h4>ID: {{ this.$route.params.id }}</h4>
       </v-layout>
       <v-layout row>
+        <!-- MOBILE VERSION -->
         <v-flex hidden-lg-and-up lg7>
           <v-carousel hide-delimiters cycle lg7 height="100%">
             <v-carousel-item
@@ -17,6 +18,7 @@
             ></v-carousel-item>
           </v-carousel>
         </v-flex>
+        <!-- WEB VERSION -->
         <v-flex lg7 hidden-md-and-down>
           <img style="width: 100%" :src="myImage" alt="" />
         </v-flex>
