@@ -27,21 +27,7 @@
           <h3 v-if="email" class="head_title">{{ email }}'s garage</h3>
           <v-spacer></v-spacer>
         </v-layout>
-        <v-layout row>
-          <v-flex lg3 mb-3>
-            <v-card class="mx-auto" max-width="280">
-              <v-img
-                src="https://www.audi.homeradiatorsreview.com/assets/images/audi-a3-8p-retrofit-1008x624.jpg"
-                height="200px"
-              ></v-img>
-              <v-card-title>Audi A3</v-card-title>
-              <v-card-subtitle>2.0TDi 103kW</v-card-subtitle>
-              <v-card-actions>
-                <v-spacer></v-spacer>
-                <v-btn color="#1f3e74" text>Prohlédnout</v-btn>
-              </v-card-actions>
-            </v-card>
-          </v-flex>
+        <v-layout row justify-center>
           <v-flex lg3 mb-3>
             <v-card class="mx-auto" max-width="280">
               <v-img
@@ -112,6 +98,10 @@ export default {
 <style lang="scss" scoped>
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@800&display=swap");
 
+#app {
+  background-color: #f2f2f2;
+}
+
 #main_container {
   max-width: 70%;
 }
@@ -130,13 +120,13 @@ export default {
 
 .head_title {
   font-family: "Montserrat", sans-serif !important;
-  font-size: 34px;
+  font-size: 48px;
   font-weight: 800;
 }
 
 @media (max-width: 600px) {
   .head_title {
-    font-size: 14px;
+    font-size: 24px;
     text-align: center;
   }
   .fl1 {

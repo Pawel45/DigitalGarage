@@ -20,7 +20,7 @@
         </v-flex>
         <!-- WEB VERSION -->
         <v-flex lg7 hidden-md-and-down>
-          <img style="width: 100%" :src="myImage" alt="" />
+          <img style="width: 100%; border: 1px black solid;" :src="myImage" alt="" />
         </v-flex>
         <v-flex lg5 hidden-md-and-down>
           <v-layout column wrap text-center>
@@ -28,7 +28,7 @@
               <img
                 v-for="(item, i) in images"
                 :key="i"
-                style="width: 150px; margin: 0 5px"
+                style="width: 150px; margin: 0 5px; border: 1px black solid;"
                 @mouseover="myImage = item.src"
                 :src="item.src"
                 alt=""

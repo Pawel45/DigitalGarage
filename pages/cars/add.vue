@@ -230,11 +230,7 @@ export default {
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@800&display=swap");
 
 #app {
-  background-image: url("https://file.kbb.com/kbb/images/PageBackground/SVG/cityscape-2a.svg");
-  background-position: center;
-  background-repeat: repeat-x;
-  background-size: 1800px;
-  min-height: 400px;
+  background-color: #f2f2f2;
 }
 
 #main_container {

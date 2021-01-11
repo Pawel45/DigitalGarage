@@ -12,6 +12,8 @@
 </template>
 
 <script>
+import {store} from 'vuex'
+
 export default {
   data() {
     return {
