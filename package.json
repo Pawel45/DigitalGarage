@@ -12,6 +12,8 @@
     "@nuxt/typescript-runtime": "^2.0.0",
     "core-js": "^3.6.5",
     "filepond": "^4.23.1",
+    "firebase": "^8.2.9",
+    "firebase-admin": "^9.5.0",
     "handy-uploader": "^1.1.4",
     "nuxt": "^2.14.6",
     "vue-filepond": "^6.0.3",

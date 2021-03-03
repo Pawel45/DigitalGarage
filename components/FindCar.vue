@@ -39,7 +39,7 @@
                 v-model="selectedModel"
                 v-if="selectedManufacturer != ''"
               ></v-select>
-              <v-btn to="/cars" style="width: 100%">Vyhledat</v-btn>
+              <v-btn @click="find()" style="width: 100%">Vyhledat</v-btn>
             </v-flex>
           </v-layout>
         </v-flex>
@@ -133,6 +133,13 @@ export default {
       });
       return result;
     },
+    find(){
+      if(this.selectedModel != '') {
+        // this.$store.dispatch("changeFilter", {manu: this.selectedManufacturer.manu, model: this.selectedModel.name});
+        this.$router.push("cars/" + this.selectedManufacturer.manu + "/" + this.selectedModel.name);
+      }
+      else this.$router.push("/");
+    }
   },
 };
 </script>

@@ -1,17 +1,17 @@
 <template>
   <v-app>
-    <SearchCars />
+    <FindCar />
     <CarFeed />
   </v-app>
 </template>
 
 <script>
-import SearchCars from "~/components/find_car.vue";
-import CarFeed from "~/components/car_feed.vue";
+import FindCar from "~/components/FindCar.vue";
+import CarFeed from "~/components/CarFeed.vue";
 
 export default {
   components: {
-    SearchCars,
+    FindCar,
     CarFeed,
   },
 };

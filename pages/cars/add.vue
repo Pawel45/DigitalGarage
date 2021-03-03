@@ -3,6 +3,7 @@
     <v-container id="main_container">
       <v-layout row wrap class="pa-2 my-6 fl1">
         <h1 class="head_title">Přidat Auto</h1>
+        <!-- <v-btn @click="addCar()">ADD</v-btn> -->
       </v-layout>
       <v-layout row wrap class="">
         <v-stepper v-model="e6" vertical non-linear style="width: 100%">
@@ -66,6 +67,8 @@
               style="width: 30%; min-width: 220px"
             ></v-file-input>
 
+            <v-btn @click="test"></v-btn>
+
             <v-btn :disabled="files == ''" @click="e6 = 3" color="primary"
               >Pokračovat</v-btn
             >
@@ -79,9 +82,9 @@
 
           <v-stepper-content step="3" style="min-width: 320px; width: 30%">
             <h4>Napište vše, co víte o svém vozidle.</h4>
-            <v-textarea v-model="text" label="Informace"></v-textarea>
+            <v-textarea v-model="info" label="Informace"></v-textarea>
 
-            <v-btn :disabled="text == ''" @click="e6 = 4" color="primary"
+            <v-btn :disabled="info == ''" @click="e6 = 4" color="primary"
               >Pokračovat</v-btn
             >
             <v-btn @click="e6 = 2" text>Zpět</v-btn>
@@ -112,7 +115,7 @@
 
             <v-btn
               :disabled="email == '' || password == '' || password.length < 8"
-              @click="e6 = 1"
+              @click="addCar()"
               color="primary"
               >Vložit</v-btn
             >
@@ -125,11 +128,14 @@
 </template>
 
 <script>
+import firebase from "firebase";
+
 export default {
   data() {
     return {
       e6: 1,
       files: [],
+      info: "",
       text: "",
       email: "",
       password: "",
@@ -215,6 +221,9 @@ export default {
     };
   },
   methods: {
+    test(){
+      console.log(this.files);
+    },
     getModels(index) {
       let result = [];
       this.models[this.selectedManufacturer.value].forEach((element) => {
@@ -222,6 +231,35 @@ export default {
       });
       return result;
     },
+    async addCar(){
+      //Připojení databáze
+      firebase.initializeApp({
+        apiKey: 'AIzaSyDt1XVGdBpKqwb1v5zVDb663X-QNw5fvJs',
+        authDomain: 'carrate.firebaseapp.com',
+        projectId: 'carrate',
+        storageBucket: "carrate.appspot.com",
+      });
+      var db = firebase.firestore();
+
+      //Upload obrázků
+      var storageRef = firebase.storage().ref();
+      var fileRef = storageRef.child(this.files[0].name)
+
+      fileRef.put(this.files[0]).then(() => {
+        console.log(fileRef);
+      });
+
+      //Přidání do databáze
+      const docRef = db.collection('cars').doc();
+
+      await docRef.set({
+        email: this.email,
+        info: this.info,
+        manu: this.selectedManufacturer.manu,
+        model: this.selectedModel.name,
+        // files: fileRef.fullPath,
+      });
+    }
   },
 };
 </script>

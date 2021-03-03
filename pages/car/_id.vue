@@ -81,6 +81,10 @@ export default {
 <style lang="scss" scoped>
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@800&display=swap");
 
+#app {
+  background-color: #f2f2f2;
+}
+
 #main_container {
   max-width: 70%;
 }
