@@ -2,7 +2,7 @@
   <v-app>
     <v-container id="main_container" grid-list-md>
       <v-layout row wrap class="pa-2 my-6 fl1">
-        <h1 class="head_title">Audi A3</h1>
+        <h1 class="head_title">{{this.manu}} {{this.model}}</h1>
         <v-spacer></v-spacer>
         <h4>ID: {{ this.$route.params.id }}</h4>
       </v-layout>
@@ -11,10 +11,10 @@
         <v-flex hidden-lg-and-up lg7>
           <v-carousel hide-delimiters cycle lg7 height="100%">
             <v-carousel-item
-              v-for="(item, i) in images"
+              v-for="(item, i) in files"
               :key="i"
-              :src="item.src"
-              :href="item.src"
+              :src="item"
+              :href="item"
             ></v-carousel-item>
           </v-carousel>
         </v-flex>
@@ -26,11 +26,11 @@
           <v-layout column wrap text-center>
             <v-flex align-center>
               <img
-                v-for="(item, i) in images"
+                v-for="(item, i) in files"
                 :key="i"
                 style="width: 150px; margin: 0 5px; border: 1px black solid;"
-                @mouseover="myImage = item.src"
-                :src="item.src"
+                @mouseover="myImage = item"
+                :src="item"
                 alt=""
               />
             </v-flex>
@@ -39,11 +39,8 @@
       </v-layout>
       <v-layout row>
         <v-flex>
-          <h2>Audi A3, 2.0TDi 103kW</h2>
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ab
-          accusantium eveniet quaerat maxime dolores! At accusantium suscipit
-          cumque dolorum, ipsum sint. Deleniti corrupti, exercitationem
-          necessitatibus tenetur repellat ipsa hic obcaecati.
+          <h2>{{this.manu}} {{this.model}}</h2>
+          {{this.info}}
         </v-flex>
       </v-layout>
     </v-container>
@@ -51,28 +48,53 @@
 </template>
 
 <script>
+import firebase from "firebase";
+
 export default {
+  mounted() {
+    //Připojení databáze
+    if (!firebase.apps.length) {
+        firebase.initializeApp({
+          apiKey: 'AIzaSyDt1XVGdBpKqwb1v5zVDb663X-QNw5fvJs',
+          authDomain: 'carrate.firebaseapp.com',
+          projectId: 'carrate',
+          storageBucket: "carrate.appspot.com",
+        });
+      }else { firebase.app();}
+    var db = firebase.firestore();
+
+    var docRef = db.collection("cars").doc(this.$route.params.id);
+
+    docRef.get().then((doc) => {
+        if (doc.exists) {
+            console.log("Document data:", doc.data());
+            this.manu = doc.data().manu;
+            this.model = doc.data().model;
+            this.info = doc.data().info;
+            this.files = doc.data().files;
+            this.myImage = doc.data().files[0];
+
+        } else {
+            // doc.data() will be undefined in this case
+            console.log("No such document!");
+            this.$router.push("/");
+        }
+    }).catch((error) => {
+        console.log("Error getting document:", error);
+    });
+  },
   data() {
     return {
-      myImage:
-        "https://static.driveto.cz/images/full/c/e/ce92e7c1-d625-4a62-9a5e-692770a9e352.jpg",
-      images: [
-        {
-          src:
-            "https://static.driveto.cz/images/full/c/e/ce92e7c1-d625-4a62-9a5e-692770a9e352.jpg",
-        },
-        {
-          src:
-            "https://maxtondesign.com/eng_pl_Front-Splitter-V-1-Audi-S3-8P-FL-8512_2.jpg",
-        },
-        {
-          src: "https://i.ebayimg.com/images/g/9IYAAOSwd9hdk5Zv/s-l400.jpg",
-        },
-        {
-          src: "https://i.ytimg.com/vi/5z0xNPicHpk/maxresdefault.jpg",
-        },
-      ],
-    };
+      manu: '',
+      model: '',
+      info: '',
+      files: null,
+      myImage: '',
+
+    }
+  },
+  methods: {
+    
   },
   components: {},
 };

@@ -67,8 +67,6 @@
               style="width: 30%; min-width: 220px"
             ></v-file-input>
 
-            <v-btn @click="test"></v-btn>
-
             <v-btn :disabled="files == ''" @click="e6 = 3" color="primary"
               >Pokračovat</v-btn
             >
@@ -233,21 +231,33 @@ export default {
     },
     async addCar(){
       //Připojení databáze
-      firebase.initializeApp({
-        apiKey: 'AIzaSyDt1XVGdBpKqwb1v5zVDb663X-QNw5fvJs',
-        authDomain: 'carrate.firebaseapp.com',
-        projectId: 'carrate',
-        storageBucket: "carrate.appspot.com",
-      });
+      if (!firebase.apps.length) {
+        firebase.initializeApp({
+          apiKey: 'AIzaSyDt1XVGdBpKqwb1v5zVDb663X-QNw5fvJs',
+          authDomain: 'carrate.firebaseapp.com',
+          projectId: 'carrate',
+          storageBucket: "carrate.appspot.com",
+        });
+      }else { firebase.app();}
       var db = firebase.firestore();
 
       //Upload obrázků
       var storageRef = firebase.storage().ref();
-      var fileRef = storageRef.child(this.files[0].name)
+      let filesUrl = [];
 
-      fileRef.put(this.files[0]).then(() => {
-        console.log(fileRef);
-      });
+      // this.files.forEach(async (element) => {
+      //   var fileRef = storageRef.child('images/' + Math.random() + element.name);
+
+      //   await fileRef.put(element);
+      //   await fileRef.getDownloadURL().then(() => {
+          
+      //   });
+      // });
+
+      var fileRef = storageRef.child('images/' + Math.random() + this.files[0].name);
+      await fileRef.put(this.files[0]);
+      var fileUrl = await fileRef.getDownloadURL();
+      filesUrl.push(fileUrl);
 
       //Přidání do databáze
       const docRef = db.collection('cars').doc();
@@ -257,7 +267,10 @@ export default {
         info: this.info,
         manu: this.selectedManufacturer.manu,
         model: this.selectedModel.name,
-        // files: fileRef.fullPath,
+        files: filesUrl,
+      }).then(() => {
+        alert("Vaše auto bylo úspěšně přidáno!")
+        this.$router.push("/car/" + docRef.id);
       });
     }
   },
