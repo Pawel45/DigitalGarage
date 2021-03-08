@@ -242,8 +242,8 @@ export default {
       var db = firebase.firestore();
 
       //Upload obrázků
-      var storageRef = firebase.storage().ref();
-      let filesUrl = [];
+      // var storageRef = firebase.storage().ref();
+      let firebaseImages = [];
 
       // this.files.forEach(async (element) => {
       //   var fileRef = storageRef.child('images/' + Math.random() + element.name);
@@ -254,10 +254,32 @@ export default {
       //   });
       // });
 
-      var fileRef = storageRef.child('images/' + Math.random() + this.files[0].name);
-      await fileRef.put(this.files[0]);
-      var fileUrl = await fileRef.getDownloadURL();
-      filesUrl.push(fileUrl);
+      async function putStorageItem(item) {
+        // the return value will be a Promise
+        return firebase.storage().ref('images/' + Math.random() + item.name).put(item)
+        .then((snapshot) => {
+          firebaseImages.push(item.getDownloadURL);
+          console.log('One success:', item, item.getDownloadURL);
+        }).catch((error) => {
+          console.log('One failed:', item, error.message);
+        });
+      }
+
+      Promise.all(
+        // Array of "Promises"
+        this.files.map(item => putStorageItem(item))
+      )
+      .then((url) => {
+        console.log(`All success`)
+      })
+      .catch((error) => {
+        console.log(`Some failed: `, error.message)
+      });
+
+      // var fileRef = storageRef.child('images/' + Math.random() + this.files[0].name);
+      // await fileRef.put(this.files[0]);
+      // var fileUrl = await fileRef.getDownloadURL();
+      // firebaseImages.push(fileUrl);
 
       //Přidání do databáze
       const docRef = db.collection('cars').doc();
@@ -267,7 +289,7 @@ export default {
         info: this.info,
         manu: this.selectedManufacturer.manu,
         model: this.selectedModel.name,
-        files: filesUrl,
+        files: firebaseImages,
       }).then(() => {
         alert("Vaše auto bylo úspěšně přidáno!")
         this.$router.push("/car/" + docRef.id);
