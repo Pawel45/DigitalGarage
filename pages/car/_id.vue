@@ -1,26 +1,30 @@
 <template>
   <v-app>
     <v-container id="main_container" grid-list-md>
-      <v-layout row wrap class="pa-2 my-6 fl1">
+      <v-layout row wrap class="pa-2 my-4 fl1">
         <h1 class="head_title">{{this.manu}} {{this.model}}</h1>
         <v-spacer></v-spacer>
-        <h4>ID: {{ this.$route.params.id }}</h4>
+        <!-- <h4>ID: {{ this.$route.params.id }}</h4> -->
       </v-layout>
       <v-layout row>
         <!-- MOBILE VERSION -->
         <v-flex hidden-lg-and-up lg7>
-          <v-carousel hide-delimiters cycle lg7 height="100%">
+          <!-- Could be parameter "cycle" to cicling between images" -->
+          <v-carousel hide-delimiters lg7 height="100%">
             <v-carousel-item
               v-for="(item, i) in files"
               :key="i"
               :src="item"
               :href="item"
+              style="height: 100%; max-height: 70vh;"
             ></v-carousel-item>
           </v-carousel>
         </v-flex>
         <!-- WEB VERSION -->
-        <v-flex lg7 hidden-md-and-down>
-          <img style="width: 100%; border: 1px black solid;" :src="myImage" alt="" />
+        <v-flex lg7 hidden-md-and-down text-center>
+          <!-- <v-icon >mdi-arrow-left</v-icon> -->
+          <img style="max-height: 50vh; max-width: 100%; border: 1px black solid;" :src="myImage" alt="" />
+          <!-- <v-icon >mdi-arrow-right</v-icon> -->
         </v-flex>
         <v-flex lg5 hidden-md-and-down>
           <v-layout column wrap text-center>
@@ -38,9 +42,11 @@
         </v-flex>
       </v-layout>
       <v-layout row>
-        <v-flex>
-          <h2>{{this.manu}} {{this.model}}</h2>
-          {{this.info}}
+        <v-flex my-5>
+          <h2>Majitel: {{this.model}}</h2>
+          <p class="infoText">
+            {{this.info}}
+          </p>
         </v-flex>
       </v-layout>
     </v-container>
@@ -90,7 +96,6 @@ export default {
       info: '',
       files: null,
       myImage: '',
-
     }
   },
   methods: {
@@ -102,6 +107,7 @@ export default {
 
 <style lang="scss" scoped>
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@800&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
 
 #app {
   background-color: #f2f2f2;
@@ -137,5 +143,10 @@ export default {
   .fl1 {
     justify-content: center;
   }
+}
+
+.infoText{
+  font-family: 'Roboto', sans-serif !important;
+  font-size: 24px;
 }
 </style>

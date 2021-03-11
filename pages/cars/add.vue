@@ -56,6 +56,7 @@
           >
 
           <v-stepper-content step="2">
+            <p>Maximální velikost jedné fotografie je max <b>10MB</b>.</p>
             <v-file-input
               v-model="files"
               multiple
@@ -113,7 +114,7 @@
 
             <v-btn
               :disabled="email == '' || password == '' || password.length < 8"
-              @click="addCar()"
+              @click="uploadImagesToFirestore()"
               color="primary"
               >Vložit</v-btn
             >
@@ -129,6 +130,17 @@
 import firebase from "firebase";
 
 export default {
+  mounted(){
+    //Připojení databáze
+    if (!firebase.apps.length) {
+      firebase.initializeApp({
+        apiKey: 'AIzaSyDt1XVGdBpKqwb1v5zVDb663X-QNw5fvJs',
+        authDomain: 'carrate.firebaseapp.com',
+        projectId: 'carrate',
+        storageBucket: "carrate.appspot.com",
+      });
+    }else { firebase.app();}
+  },
   data() {
     return {
       e6: 1,
@@ -139,6 +151,8 @@ export default {
       password: "",
       show: false,
       sumbit: false,
+      firebaseImages: [],
+      maxFileSize: 10000000,
 
       rules: {
         required: (value) => !!value || "Nutné vyplnit.",
@@ -219,9 +233,6 @@ export default {
     };
   },
   methods: {
-    test(){
-      console.log(this.files);
-    },
     getModels(index) {
       let result = [];
       this.models[this.selectedManufacturer.value].forEach((element) => {
@@ -229,57 +240,8 @@ export default {
       });
       return result;
     },
-    async addCar(){
-      //Připojení databáze
-      if (!firebase.apps.length) {
-        firebase.initializeApp({
-          apiKey: 'AIzaSyDt1XVGdBpKqwb1v5zVDb663X-QNw5fvJs',
-          authDomain: 'carrate.firebaseapp.com',
-          projectId: 'carrate',
-          storageBucket: "carrate.appspot.com",
-        });
-      }else { firebase.app();}
+    async addItemToFirestore(){
       var db = firebase.firestore();
-
-      //Upload obrázků
-      // var storageRef = firebase.storage().ref();
-      let firebaseImages = [];
-
-      // this.files.forEach(async (element) => {
-      //   var fileRef = storageRef.child('images/' + Math.random() + element.name);
-
-      //   await fileRef.put(element);
-      //   await fileRef.getDownloadURL().then(() => {
-          
-      //   });
-      // });
-
-      async function putStorageItem(item) {
-        // the return value will be a Promise
-        return firebase.storage().ref('images/' + Math.random() + item.name).put(item)
-        .then((snapshot) => {
-          firebaseImages.push(item.getDownloadURL);
-          console.log('One success:', item, item.getDownloadURL);
-        }).catch((error) => {
-          console.log('One failed:', item, error.message);
-        });
-      }
-
-      Promise.all(
-        // Array of "Promises"
-        this.files.map(item => putStorageItem(item))
-      )
-      .then((url) => {
-        console.log(`All success`)
-      })
-      .catch((error) => {
-        console.log(`Some failed: `, error.message)
-      });
-
-      // var fileRef = storageRef.child('images/' + Math.random() + this.files[0].name);
-      // await fileRef.put(this.files[0]);
-      // var fileUrl = await fileRef.getDownloadURL();
-      // firebaseImages.push(fileUrl);
 
       //Přidání do databáze
       const docRef = db.collection('cars').doc();
@@ -289,12 +251,49 @@ export default {
         info: this.info,
         manu: this.selectedManufacturer.manu,
         model: this.selectedModel.name,
-        files: firebaseImages,
+        files: this.firebaseImages,
       }).then(() => {
         alert("Vaše auto bylo úspěšně přidáno!")
         this.$router.push("/car/" + docRef.id);
       });
-    }
+    },
+    async uploadImagesToFirestore(){
+      //Upload obrázků
+      async function putStorageItem(item, firebaseImages, maxFileSize) {
+        if(item.size < maxFileSize){
+        // the return value will be a Promise
+          return firebase.storage().ref('images/' + Math.random() + item.name).put(item)
+          .then((snapshot) => {
+            console.log('One success:', item);
+            return snapshot.ref.getDownloadURL().then(downloadURL => {
+                //promise inside promise to get donloadable URL
+                firebaseImages.push(downloadURL);
+                console.log("File available at", downloadURL);
+            });
+          }).catch((error) => {
+            console.log('One failed:', item, error.message);
+          });
+        }
+        else{
+          console.log("File is too large");
+        }
+      }
+        
+
+      Promise.all(
+        // Array of "Promises"
+        this.files.map(item => putStorageItem(item, this.firebaseImages, this.maxFileSize))
+      )
+      .then((url) => {
+        console.log(`All success`);
+        this.addItemToFirestore();
+      })
+      .catch((error) => {
+        console.log(`Some failed: `, error.message)
+      });
+
+      return this.firebaseImages;
+    },
   },
 };
 </script>
