@@ -8,10 +8,9 @@
           <v-spacer></v-spacer>
         </v-layout>
         <v-layout row>
-          <v-flex lg3 mb-3>
-            <v-card 
-            v-for="car in getFeatured()"
-            :key="car.id"
+          <v-flex lg3 mb-3 v-for="car in getFeatured()"
+            :key="car.id">
+            <v-card
             class="mx-auto" 
             max-width="280"
             >
