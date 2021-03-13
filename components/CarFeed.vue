@@ -9,63 +9,26 @@
         </v-layout>
         <v-layout row>
           <v-flex lg3 mb-3>
-            <v-card class="mx-auto" max-width="280">
+            <v-card 
+            v-for="car in getFeatured()"
+            :key="car.id"
+            class="mx-auto" 
+            max-width="280"
+            >
               <v-img
-                src="https://www.audi.homeradiatorsreview.com/assets/images/audi-a3-8p-retrofit-1008x624.jpg"
+                :src="car.myImage"
                 height="200px"
               ></v-img>
-              <v-card-title>Audi A3</v-card-title>
-              <v-card-subtitle>2.0TDi 103kW</v-card-subtitle>
+              <v-card-title>{{car.manu}} {{car.model}}</v-card-title>
+              <v-card-subtitle></v-card-subtitle>
               <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn to="cars/1" color="#1f3e74" text>Prohlédnout</v-btn>
-              </v-card-actions>
-            </v-card>
-          </v-flex>
-          <v-flex lg3 mb-3>
-            <v-card class="mx-auto" max-width="280">
-              <v-img
-                src="https://www.audi.homeradiatorsreview.com/assets/images/audi-a3-8p-retrofit-1008x624.jpg"
-                height="200px"
-              ></v-img>
-              <v-card-title>Audi A3</v-card-title>
-              <v-card-subtitle>2.0TDi 103kW</v-card-subtitle>
-              <v-card-actions>
-                <v-spacer></v-spacer>
-                <v-btn to="cars/2" color="#1f3e74" text>Prohlédnout</v-btn>
-              </v-card-actions>
-            </v-card>
-          </v-flex>
-          <v-flex lg3 mb-3>
-            <v-card class="mx-auto" max-width="280">
-              <v-img
-                src="https://www.audi.homeradiatorsreview.com/assets/images/audi-a3-8p-retrofit-1008x624.jpg"
-                height="200px"
-              ></v-img>
-              <v-card-title>Audi A3</v-card-title>
-              <v-card-subtitle>2.0TDi 103kW</v-card-subtitle>
-              <v-card-actions>
-                <v-spacer></v-spacer>
-                <v-btn to="cars/3" color="#1f3e74" text>Prohlédnout</v-btn>
-              </v-card-actions>
-            </v-card>
-          </v-flex>
-          <v-flex lg3 mb-3>
-            <v-card class="mx-auto" max-width="280">
-              <v-img
-                src="https://www.audi.homeradiatorsreview.com/assets/images/audi-a3-8p-retrofit-1008x624.jpg"
-                height="200px"
-              ></v-img>
-              <v-card-title>Audi A3</v-card-title>
-              <v-card-subtitle>2.0TDi 103kW</v-card-subtitle>
-              <v-card-actions>
-                <v-spacer></v-spacer>
-                <v-btn to="cars/4" color="#1f3e74" text>Prohlédnout</v-btn>
+                <v-btn :to="'car/' + car.id" color="#1f3e74" text>Prohlédnout</v-btn>
               </v-card-actions>
             </v-card>
           </v-flex>
         </v-layout>
-        <v-layout row justify-center mt-2>
+        <v-layout row justify-center mt-4>
           <v-btn color="#1f3e74 !important" dark to="cars/add"
             >Přidej si své</v-btn
           >
@@ -76,7 +39,45 @@
 </template>
 
 <script>
-export default {};
+import firebase from "firebase";
+
+export default {
+  created(){
+    //Připojení databáze
+    if (!firebase.apps.length) {
+        firebase.initializeApp({
+          apiKey: 'AIzaSyDt1XVGdBpKqwb1v5zVDb663X-QNw5fvJs',
+          authDomain: 'carrate.firebaseapp.com',
+          projectId: 'carrate',
+          storageBucket: "carrate.appspot.com",
+        });
+      }else { firebase.app();}
+    var db = firebase.firestore();
+
+    db.collection("cars").get().then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+          console.log(doc.id, " => ", doc.data());
+          this.featured.push({
+            id: doc.id,
+            manu: doc.data().manu,
+            model: doc.data().model,
+            info: doc.data().info,
+            myImage: doc.data().files[0],
+          });
+      });
+    });
+  },
+  data(){
+    return{
+      featured: [],
+    }
+  },
+  methods: {
+    getFeatured(){
+      return this.featured.slice(0,5);
+    }
+  },
+};
 </script>
 
 <style lang="css" scoped>

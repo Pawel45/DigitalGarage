@@ -41,12 +41,28 @@
           </v-layout>
         </v-flex>
       </v-layout>
-      <v-layout row>
-        <v-flex my-5>
-          <h2>Majitel: {{this.model}}</h2>
+      <v-layout column>
+        <v-flex my-3>
           <p class="infoText">
             {{this.info}}
           </p>
+        </v-flex>
+        <v-flex class="basicText">
+          <p v-if="this.manu != ''">Majitel: {{this.owner}}</p>
+        </v-flex>
+        <v-flex mb-5 align-self-center text-center>
+          <h2 class="basicText">VAŠE HODNOCENÍ</h2>
+          <v-rating
+          color="yellow"
+          background-color="grey"
+            empty-icon="mdi-star-outline"
+            full-icon="mdi-star"
+            half-icon="mdi-star-half-full"
+            hover
+            length="5"
+            size="32"
+            value=3
+          ></v-rating>
         </v-flex>
       </v-layout>
     </v-container>
@@ -79,6 +95,7 @@ export default {
             this.info = doc.data().info;
             this.files = doc.data().files;
             this.myImage = doc.data().files[0];
+            this.owner = doc.data().owner;
 
         } else {
             // doc.data() will be undefined in this case
@@ -96,6 +113,9 @@ export default {
       info: '',
       files: null,
       myImage: '',
+      owner: '',
+      value: 3,
+
     }
   },
   methods: {
@@ -108,6 +128,7 @@ export default {
 <style lang="scss" scoped>
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@800&display=swap");
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;400;500&display=swap');
 
 #app {
   background-color: #f2f2f2;
@@ -146,7 +167,13 @@ export default {
 }
 
 .infoText{
-  font-family: 'Roboto', sans-serif !important;
+  font-family: 'Poppins', sans-serif !important;
   font-size: 24px;
+  font-weight: 400;
+}
+.basicText{
+  font-family: 'Poppins', sans-serif !important;
+  font-size: 24px;
+  font-weight: 500;
 }
 </style>

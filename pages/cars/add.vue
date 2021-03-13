@@ -79,8 +79,9 @@
             >Uveďte doplňující informace</v-stepper-step
           >
 
-          <v-stepper-content step="3" style="min-width: 320px; width: 30%">
-            <h4>Napište vše, co víte o svém vozidle.</h4>
+          <v-stepper-content step="3" style="min-width: 320px; width: 40%">
+            <h4 style="margin-bottom: 10px;">Napište vše, co víte o svém vozidle.</h4>
+            <p><i>Rok výroby, tachometr, objem, výkon, výbava..</i></p>
             <v-textarea v-model="info" label="Informace"></v-textarea>
 
             <v-btn :disabled="info == ''" @click="e6 = 4" color="primary"
@@ -93,6 +94,11 @@
           <v-stepper-step step="4">Dokončení příspěvku</v-stepper-step>
 
           <v-stepper-content step="4">
+            <v-text-field
+              v-model="owner"
+              label="Jméno (volitelné)"
+              style="width: 30%; min-width: 220px"
+            ></v-text-field>
             <v-text-field
               v-model="email"
               :rules="[rules.required, rules.email]"
@@ -149,6 +155,7 @@ export default {
       text: "",
       email: "",
       password: "",
+      owner: "",
       show: false,
       sumbit: false,
       firebaseImages: [],
@@ -233,7 +240,7 @@ export default {
     };
   },
   methods: {
-    getModels(index) {
+    getModels() {
       let result = [];
       this.models[this.selectedManufacturer.value].forEach((element) => {
         result.push(element);
@@ -252,6 +259,7 @@ export default {
         manu: this.selectedManufacturer.manu,
         model: this.selectedModel.name,
         files: this.firebaseImages,
+        owner: this.owner,
       }).then(() => {
         alert("Vaše auto bylo úspěšně přidáno!")
         this.$router.push("/car/" + docRef.id);
