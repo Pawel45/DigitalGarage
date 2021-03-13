@@ -255,6 +255,7 @@ export default {
 
       await docRef.set({
         email: this.email,
+        password: this.password,
         info: this.info,
         manu: this.selectedManufacturer.manu,
         model: this.selectedModel.name,
@@ -302,6 +303,9 @@ export default {
 
       return this.firebaseImages;
     },
+    getHashedPassword(){
+
+    }
   },
 };
 </script>
