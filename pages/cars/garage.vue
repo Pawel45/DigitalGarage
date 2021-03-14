@@ -9,64 +9,42 @@
           <h3>Zadejte e-mail, se kterým jste si své vozidlo spojili.</h3>
           <v-text-field
             :rules="[rules.email]"
+            v-model="email"
             label="e-mail:"
             style="min-width: 200px"
           >
           </v-text-field>
         </v-flex>
         <v-flex>
-          <v-btn color="#1f3e74 !important" dark @click="results = !results"
+          <v-btn color="#1f3e74 !important" dark @click="find()"
             >Ukázat vozidla</v-btn
           >
         </v-flex>
       </v-layout>
 
-      <div v-if="results" grid-list-md class="width: 100%">
+      <div v-if="cars != ''" grid-list-md class="width: 100%">
         <v-layout row wrap class="pa-2 my-6 fl1">
           <v-spacer></v-spacer>
-          <h3 v-if="email" class="head_title">{{ email }}'s garage</h3>
+          <h3 v-if="email" class="head_title">{{ emailText }}'s garage</h3>
           <v-spacer></v-spacer>
         </v-layout>
         <v-layout row justify-center>
-          <v-flex lg3 mb-3>
-            <v-card class="mx-auto" max-width="280">
+          <v-flex lg3 mb-3 v-for="car in cars"
+            :key="car.id">
+            <v-card
+            class="mx-auto" 
+            max-width="280"
+            >
               <v-img
-                src="https://www.audi.homeradiatorsreview.com/assets/images/audi-a3-8p-retrofit-1008x624.jpg"
-                height="200px"
+                :src="car.myImage"
+                max-height="220px"
+                contain
               ></v-img>
-              <v-card-title>Audi A3</v-card-title>
-              <v-card-subtitle>2.0TDi 103kW</v-card-subtitle>
+              <v-card-title>{{car.manu}} {{car.model}}</v-card-title>
+              <v-card-subtitle></v-card-subtitle>
               <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn color="#1f3e74" text>Prohlédnout</v-btn>
-              </v-card-actions>
-            </v-card>
-          </v-flex>
-          <v-flex lg3 mb-3>
-            <v-card class="mx-auto" max-width="280">
-              <v-img
-                src="https://www.audi.homeradiatorsreview.com/assets/images/audi-a3-8p-retrofit-1008x624.jpg"
-                height="200px"
-              ></v-img>
-              <v-card-title>Audi A3</v-card-title>
-              <v-card-subtitle>2.0TDi 103kW</v-card-subtitle>
-              <v-card-actions>
-                <v-spacer></v-spacer>
-                <v-btn color="#1f3e74" text>Prohlédnout</v-btn>
-              </v-card-actions>
-            </v-card>
-          </v-flex>
-          <v-flex lg3 mb-3>
-            <v-card class="mx-auto" max-width="280">
-              <v-img
-                src="https://www.audi.homeradiatorsreview.com/assets/images/audi-a3-8p-retrofit-1008x624.jpg"
-                height="200px"
-              ></v-img>
-              <v-card-title>Audi A3</v-card-title>
-              <v-card-subtitle>2.0TDi 103kW</v-card-subtitle>
-              <v-card-actions>
-                <v-spacer></v-spacer>
-                <v-btn color="#1f3e74" text>Prohlédnout</v-btn>
+                <v-btn @click="$router.push('/car/' + car.id)" color="#1f3e74" text>Prohlédnout</v-btn>
               </v-card-actions>
             </v-card>
           </v-flex>
@@ -77,11 +55,14 @@
 </template>
 
 <script>
+import firebase from "firebase";
+
 export default {
   data() {
     return {
+      cars: [],
+      emailText: '',
       email: "",
-      results: false,
       rules: {
         required: (value) => !!value || "Nutné vyplnit.",
         email: (value) => {
@@ -90,6 +71,42 @@ export default {
         },
       },
     };
+  },
+  methods: {
+    find(){
+      this.cars = [];
+      this.emailText = this.email.toLowerCase();
+      //Připojení databáze
+      if (!firebase.apps.length) {
+          firebase.initializeApp({
+            apiKey: 'AIzaSyDt1XVGdBpKqwb1v5zVDb663X-QNw5fvJs',
+            authDomain: 'carrate.firebaseapp.com',
+            projectId: 'carrate',
+            storageBucket: "carrate.appspot.com",
+          });
+        }else { firebase.app();}
+      var db = firebase.firestore();
+
+      db.collection("cars").where("email", "==", this.email.toLowerCase())
+      .get()
+      .then((querySnapshot) => {
+          querySnapshot.forEach((doc) => {
+              // doc.data() is never undefined for query doc snapshots
+              console.log(doc.id, " => ", doc.data());
+              this.cars.push({
+                id: doc.id,
+                manu: doc.data().manu,
+                model: doc.data().model,
+                info: doc.data().info,
+                myImage: doc.data().files[0],
+              });
+
+          });
+      })
+      .catch((error) => {
+          console.log("Error getting documents: ", error);
+      });
+    },
   },
   components: {},
 };

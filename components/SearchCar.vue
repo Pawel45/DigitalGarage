@@ -18,24 +18,20 @@
             <v-flex class="pa-3">
               <v-select
                 :items="manufacturers"
-                item-text="manu"
-                item-value="value"
                 label="Značka"
                 v-model="selectedManufacturer"
                 return-object
                 single-line
                 dense
                 solo
+                v-on:change="getModels()"
               >
               </v-select>
               <v-select
-                :items="getModels(selectedManufacturer.value)"
+                :items="models"
                 label="Model"
-                item-text="name"
-                item-value="value"
                 dense
                 solo
-                return-object
                 v-model="selectedModel"
                 v-if="selectedManufacturer != ''"
               ></v-select>
@@ -53,85 +49,55 @@
 </template>
 
 <script>
+import firebase from "firebase";
+
 export default {
+  created(){
+    //Připojení databáze
+    if (!firebase.apps.length) {
+        firebase.initializeApp({
+          apiKey: 'AIzaSyDt1XVGdBpKqwb1v5zVDb663X-QNw5fvJs',
+          authDomain: 'carrate.firebaseapp.com',
+          projectId: 'carrate',
+          storageBucket: "carrate.appspot.com",
+        });
+      }else { firebase.app();}
+    var db = firebase.firestore();
+
+    db.collection("znacky").get().then((querySnapshot) => {
+    querySnapshot.forEach((doc) => {
+        // doc.data() is never undefined for query doc snapshots
+        console.log(doc.id, " => ", doc.data());
+        this.manufacturers.push(doc.id);
+    });
+  });
+  },
   data() {
     return {
-      selectedManufacturer: { manu: "Alfa Romeo", value: "0" },
+      selectedManufacturer: "Alfa Romeo",
       selectedModel: "",
 
-      manufacturers: [
-        { manu: "Alfa Romeo", value: "0" },
-        { manu: "Audi", value: "1" },
-        { manu: "BMW", value: "2" },
-        { manu: "Bugatti", value: "3" },
-        { manu: "Cadillac", value: "4" },
-        { manu: "Caterham", value: "5" },
-        { manu: "Citroën", value: "6" },
-        { manu: "Dacia", value: "7" },
-        { manu: "Dodge", value: "8" },
-        { manu: "Ferrari", value: "9" },
-        { manu: "Fiat", value: "10" },
-        { manu: "Ford", value: "11" },
-        { manu: "Hummer", value: "12" },
-        { manu: "Hyundai", value: "13" },
-        { manu: "Chevrolet", value: "14" },
-        { manu: "Chrysler", value: "15" },
-        { manu: "Isuzu", value: "16" },
-        { manu: "Iveco", value: "17" },
-        { manu: "Jaguar", value: "18" },
-        { manu: "Jeep", value: "19" },
-        { manu: "Kia", value: "20" },
-        { manu: "KTM", value: "21" },
-        { manu: "Lada", value: "22" },
-        { manu: "Lamborghini", value: "23" },
-        { manu: "Lancia", value: "24" },
-        { manu: "Land Rover", value: "25" },
-        { manu: "Lexus", value: "26" },
-        { manu: "Lotus", value: "27" },
-        { manu: "Mahindra", value: "28" },
-        { manu: "Maserati", value: "29" },
-        { manu: "Mazda", value: "30" },
-        { manu: "McLaren", value: "31" },
-        { manu: "Mercedes", value: "32" },
-        { manu: "MG", value: "33" },
-        { manu: "Mini", value: "34" },
-        { manu: "Mitsubishi", value: "35" },
-        { manu: "Nissan", value: "36" },
-        { manu: "Opel", value: "37" },
-        { manu: "Peugeot", value: "38" },
-        { manu: "Porsche", value: "39" },
-        { manu: "Renault", value: "40" },
-        { manu: "Rover", value: "41" },
-        { manu: "Saab", value: "42" },
-        { manu: "Seat", value: "43" },
-        { manu: "Smart", value: "44" },
-        { manu: "Subaru", value: "45" },
-        { manu: "Suzuki", value: "46" },
-        { manu: "Škoda", value: "47" },
-        { manu: "Toyota", value: "48" },
-        { manu: "Volkswagen", value: "49" },
-        { manu: "Volvo", value: "50" },
-      ],
-
-      models: [
-        [
-          { name: "147", value: "147" },
-          { name: "156", value: "156" },
-          { name: "159", value: "159" },
-          { name: "166", value: "166" },
-        ],
-        [{ name: "A3", value: "a3" }],
-        [{ name: "E46", value: "e46" }],
-      ],
+      manufacturers: [],
+      models: [],
     };
   },
   methods: {
-    getModels(index) {
-      let result = [];
-      this.models[this.selectedManufacturer.value].forEach((element) => {
-        result.push(element);
+    getModels() {
+      var db = firebase.firestore();
+
+      var docRef = db.collection("znacky").doc(this.selectedManufacturer);
+
+      docRef.get().then((doc) => {
+          if (doc.exists) {
+              console.log("Document data:", doc.data());
+              this.models = doc.data().models;
+          } else {
+              // doc.data() will be undefined in this case
+              console.log("No such document!");
+          }
+      }).catch((error) => {
+          console.log("Error getting document:", error);
       });
-      return result;
     },
     find(){
       if(this.selectedModel != '') {

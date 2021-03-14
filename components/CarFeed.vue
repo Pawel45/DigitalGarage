@@ -16,7 +16,8 @@
             >
               <v-img
                 :src="car.myImage"
-                height="200px"
+                max-height="220px"
+                contain
               ></v-img>
               <v-card-title>{{car.manu}} {{car.model}}</v-card-title>
               <v-card-subtitle></v-card-subtitle>
