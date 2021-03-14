@@ -6,7 +6,7 @@
       </v-layout>
       <v-layout column text-center align-center>
         <v-flex>
-          <h3>Zadejte e-mail, se kterým jste si své vozidlo spojili.</h3>
+          <h3 class="otherText">Zadejte e-mail, se kterým jste si své vozidlo spojili.</h3>
           <v-text-field
             :rules="[rules.email]"
             v-model="email"
@@ -120,6 +120,7 @@ export default {
 
 <style lang="scss" scoped>
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@800&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;400;500&display=swap');
 
 #app {
   background-color: #f2f2f2;
@@ -155,6 +156,12 @@ export default {
   .fl1 {
     justify-content: center;
   }
+}
+
+.otherText{
+  font-family: 'Poppins', sans-serif !important;
+  font-size: 18px;
+  font-weight: 400;
 }
 
 .v-card {

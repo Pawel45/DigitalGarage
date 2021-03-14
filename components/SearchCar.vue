@@ -112,6 +112,7 @@ export default {
 
 <style lang="css" scoped>
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@800&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;400;500&display=swap');
 
 #app {
   background-image: url("https://file.kbb.com/kbb/images/PageBackground/SVG/cityscape-2a.svg");
@@ -145,7 +146,7 @@ export default {
 }
 @media (max-width: 600px) {
   .head_title {
-    font-size: 24px;
+    font-size: 36px;
     text-align: center;
   }
   .fl1 {
@@ -166,14 +167,15 @@ export default {
 }
 
 .description {
-  font-family: "Open Sans", sans-serif, Tahoma, Arial;
+  font-family: 'Poppins', sans-serif !important;
   font-size: 14px;
+  font-weight: 200;
 }
 
 .title {
-  font-family: "Montserrat", sans-serif;
+  font-family: 'Poppins', sans-serif !important;
   font-size: 24px;
-  font-weight: 800;
+  font-weight: 400;
 }
 
 .select_image_flex {

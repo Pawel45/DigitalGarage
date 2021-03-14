@@ -94,6 +94,13 @@ export default {
   font-family: "Montserrat", sans-serif !important;
 }
 
+@media (max-width: 600px) {
+  .head_title {
+    font-size: 36px;
+    text-align: center;
+  }
+}
+
 #main_container {
   max-width: 70%;
   margin: auto;
