@@ -102,7 +102,7 @@ export default {
     find(){
       if(this.selectedModel != '') {
         // this.$store.dispatch("changeFilter", {manu: this.selectedManufacturer.manu, model: this.selectedModel.name});
-        this.$router.push("cars/" + this.selectedManufacturer.manu + "/" + this.selectedModel.name);
+        this.$router.push("cars/" + this.selectedManufacturer + "/" + this.selectedModel);
       }
       else this.$router.push("/");
     }

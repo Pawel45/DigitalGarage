@@ -31,22 +31,28 @@
         <v-layout row justify-center>
           <v-flex lg3 mb-3 v-for="car in cars"
             :key="car.id">
-            <v-card
-            class="mx-auto" 
-            max-width="280"
-            >
-              <v-img
-                :src="car.myImage"
-                max-height="220px"
-                contain
-              ></v-img>
-              <v-card-title>{{car.manu}} {{car.model}}</v-card-title>
-              <v-card-subtitle></v-card-subtitle>
-              <v-card-actions>
-                <v-spacer></v-spacer>
-                <v-btn @click="$router.push('/car/' + car.id)" color="#1f3e74" text>Prohlédnout</v-btn>
-              </v-card-actions>
-            </v-card>
+            <v-hover v-slot="{ hover }">
+              <v-card
+              :elevation="hover ? 12 : 2"
+              :class="{ 'on-hover': hover }"
+              class="mx-auto" 
+              max-width="280"
+              @click="$router.push('/car/' + car.id)"
+              style="cursor: pointer;"
+              >
+                <v-img
+                  :src="car.myImage"
+                  max-height="220px"
+                  contain
+                ></v-img>
+                <v-card-title>{{car.manu}} {{car.model}}</v-card-title>
+                <v-card-subtitle></v-card-subtitle>
+                <v-card-actions>
+                  <v-spacer></v-spacer>
+                  <v-btn @click="$router.push('/car/' + car.id)" color="#1f3e74" text>Prohlédnout</v-btn>
+                </v-card-actions>
+              </v-card>
+            </v-hover>
           </v-flex>
         </v-layout>
       </div>
@@ -150,4 +156,13 @@ export default {
     justify-content: center;
   }
 }
+
+.v-card {
+  transition: opacity .4s ease-in-out;
+}
+
+.v-card:not(.on-hover) {
+  opacity: 0.9;
+ }
+
 </style>
