@@ -208,8 +208,8 @@ export default {
         email: this.email.toLowerCase(),
         password: this.password,
         info: this.info,
-        manu: this.selectedManufacturer.manu,
-        model: this.selectedModel.name,
+        manu: this.selectedManufacturer,
+        model: this.selectedModel,
         files: this.firebaseImages,
         owner: this.owner,
       }).then(() => {

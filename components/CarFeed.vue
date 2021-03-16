@@ -89,6 +89,8 @@ export default {
 
 <style lang="css" scoped>
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@800&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;400;500&display=swap');
+
 
 .head_title {
   font-family: "Montserrat", sans-serif !important;
