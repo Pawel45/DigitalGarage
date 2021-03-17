@@ -26,7 +26,7 @@
                   style="hover"
                 ></v-img>
                 <v-card-title>{{car.manu}} {{car.model}}</v-card-title>
-                <v-card-subtitle></v-card-subtitle>
+                <v-card-subtitle>{{car.info.slice(0, 30)}} ...</v-card-subtitle>
                 <v-card-actions>
                   <v-spacer></v-spacer>
                   <v-btn :to="'car/' + car.id" color="#1f3e74" text>Prohlédnout</v-btn>

@@ -8,62 +8,32 @@
         <v-spacer></v-spacer>
       </v-layout>
       
-      <v-layout row justify-center>
-          <v-flex lg3 mb-3>
-            <v-card class="mx-auto" max-width="280">
-              <v-img
-                src="https://www.audi.homeradiatorsreview.com/assets/images/audi-a3-8p-retrofit-1008x624.jpg"
-                height="200px"
-              ></v-img>
-              <v-card-title>{{ this.$route.params.manu }} {{ this.$route.params.model }}</v-card-title>
-              <v-card-subtitle>2.0TDi 103kW</v-card-subtitle>
-              <v-card-actions>
-                <v-spacer></v-spacer>
-                <v-btn color="#1f3e74" text>Prohlédnout</v-btn>
-              </v-card-actions>
-            </v-card>
-          </v-flex>
-          <v-flex lg3 mb-3>
-            <v-card class="mx-auto" max-width="280">
-              <v-img
-                src="https://www.audi.homeradiatorsreview.com/assets/images/audi-a3-8p-retrofit-1008x624.jpg"
-                height="200px"
-              ></v-img>
-              <v-card-title>{{ this.$route.params.manu }} {{ this.$route.params.model }}</v-card-title>
-              <v-card-subtitle>2.0TDi 103kW</v-card-subtitle>
-              <v-card-actions>
-                <v-spacer></v-spacer>
-                <v-btn color="#1f3e74" text>Prohlédnout</v-btn>
-              </v-card-actions>
-            </v-card>
-          </v-flex>
-          <v-flex lg3 mb-3>
-            <v-card class="mx-auto" max-width="280">
-              <v-img
-                src="https://www.audi.homeradiatorsreview.com/assets/images/audi-a3-8p-retrofit-1008x624.jpg"
-                height="200px"
-              ></v-img>
-              <v-card-title>{{ this.$route.params.manu }} {{ this.$route.params.model }}</v-card-title>
-              <v-card-subtitle>2.0TDi 103kW</v-card-subtitle>
-              <v-card-actions>
-                <v-spacer></v-spacer>
-                <v-btn color="#1f3e74" text>Prohlédnout</v-btn>
-              </v-card-actions>
-            </v-card>
-          </v-flex>
-          <v-flex lg3 mb-3>
-            <v-card class="mx-auto" max-width="280">
-              <v-img
-                src="https://www.audi.homeradiatorsreview.com/assets/images/audi-a3-8p-retrofit-1008x624.jpg"
-                height="200px"
-              ></v-img>
-              <v-card-title>{{ this.$route.params.manu }} {{ this.$route.params.model }}</v-card-title>
-              <v-card-subtitle>2.0TDi 103kW</v-card-subtitle>
-              <v-card-actions>
-                <v-spacer></v-spacer>
-                <v-btn color="#1f3e74" text>Prohlédnout</v-btn>
-              </v-card-actions>
-            </v-card>
+      <v-layout row>
+          <v-flex lg3 mb-3 v-for="car in result"
+            :key="car.id">
+            <v-hover v-slot="{ hover }">
+              <v-card
+              :elevation="hover ? 12 : 2"
+              :class="{ 'on-hover': hover }"
+              class="mx-auto" 
+              max-width="280"
+              @click="$router.push('/car/' + car.id)"
+              style="cursor: pointer;"
+              >
+                <v-img
+                  :src="car.myImage"
+                  max-height="210px"
+                  contain
+                  style="hover"
+                ></v-img>
+                <v-card-title>{{car.manu}} {{car.model}}</v-card-title>
+                <v-card-subtitle>{{car.info.slice(0, 30)}} ...</v-card-subtitle>
+                <v-card-actions>
+                  <v-spacer></v-spacer>
+                  <v-btn :to="'car/' + car.id" color="#1f3e74" text>Prohlédnout</v-btn>
+                </v-card-actions>
+              </v-card>
+            </v-hover>
           </v-flex>
         </v-layout>
     </v-container>
@@ -71,11 +41,43 @@
 </template>
 
 <script>
+import firebase from 'firebase';
 
 export default {
+  created(){
+    // Připojení databáze
+    if (!firebase.apps.length) {
+        firebase.initializeApp({
+          apiKey: process.env.VUE_APP_API_KEY,
+          authDomain: 'carrate.firebaseapp.com',
+          projectId: 'carrate',
+          storageBucket: "carrate.appspot.com",
+        });
+      }else { firebase.app();}
+    var db = firebase.firestore();
+
+    db.collection("cars").where("manu", "==", this.$route.params.manu).where("model", "==", this.$route.params.model)
+    .get()
+    .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+            // doc.data() is never undefined for query doc snapshots
+            console.log(doc.id, " => ", doc.data());
+            this.result.push({
+            id: doc.id,
+            manu: doc.data().manu,
+            model: doc.data().model,
+            info: doc.data().info,
+            myImage: doc.data().files[0],
+          });
+        });
+    })
+    .catch((error) => {
+        console.log("Error getting documents: ", error);
+    });
+  },
   data() {
     return {
-
+      result: [],
     };
   },
   methods: {
@@ -118,4 +120,12 @@ export default {
     justify-content: center;
   }
 }
+
+.v-card {
+  transition: opacity .4s ease-in-out;
+}
+
+.v-card:not(.on-hover) {
+  opacity: 0.9;
+ }
 </style>
