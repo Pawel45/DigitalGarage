@@ -40,9 +40,7 @@
           </v-layout>
         </v-flex>
 
-        <v-flex sm6 class="justify-center select_image_flex">
-          <div class="select_image"></div>
-        </v-flex>
+        <v-img class="search_img" sm6 :src="require('@/images/carrate-hero-img.png')" width="200" position="center center" contain max-height="330px"></v-img>
       </v-layout>
     </v-container>
   </div>
@@ -178,16 +176,16 @@ export default {
   font-weight: 400;
 }
 
-.select_image_flex {
+.search_img {
   flex-grow: 1 !important;
-  max-width: 100%;
 }
 @media (max-width: 600px) {
-  .select_image_flex {
+  .search_img {
     display: none;
   }
   .search_car {
     justify-content: center;
+    align-items: center;
     text-align: center;
     flex: 1;
     max-width: 100%;
@@ -195,12 +193,6 @@ export default {
 }
 
 .select_image {
-  background: url(https://file.kbb.com/kbb/images/Owners/owners-hero-img.png)
-      center center / contain no-repeat,
-    rgb(43, 81, 149);
-  background-position: center center;
-  background-repeat: no-repeat;
-  height: 100%;
   border-radius: 4px !important;
 }
 </style>

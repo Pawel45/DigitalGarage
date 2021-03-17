@@ -1,3 +1,4 @@
 npm install
 npm install axios vue-stack-grid
 npm install firebase
+npm install bcrypt
