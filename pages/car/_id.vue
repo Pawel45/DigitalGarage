@@ -48,7 +48,7 @@
           </p>
         </v-flex>
         <v-flex class="basicText">
-          <p v-if="this.manu != ''">Majitel: {{this.owner}}</p>
+          <p v-if="this.owner != ''">Majitel: {{this.owner}}</p>
         </v-flex>
         <v-flex mb-5 align-self-center text-center>
           <h2 class="basicText">VAŠE HODNOCENÍ</h2>

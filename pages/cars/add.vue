@@ -112,9 +112,21 @@
               label="Heslo (slouží k pozdější úpravě)"
               style="width: 30%; min-width: 220px"
             ></v-text-field>
+            <v-text-field
+              :append-icon="showConfirm ? 'mdi-eye' : 'mdi-eye-off'"
+              :rules="[rules.required, rules.min, (password === passwordConfirm) || 'Hesla se musí shodovat!']"
+              :type="showConfirm ? 'text' : 'password'"
+              name=""
+              hint="Minimální délka 8 znaků"
+              counter
+              @click:append="showConfirm = !showConfirm"
+              v-model="passwordConfirm"
+              label="Potvrďte heslo"
+              style="width: 30%; min-width: 220px"
+            ></v-text-field>
 
             <v-btn
-              :disabled="email == '' || password == '' || password.length < 8"
+              :disabled="email == '' || password == '' || password.length < 8 || isDisabled || password != passwordConfirm"
               @click="uploadImagesToFirestore()"
               color="primary"
               >Vložit</v-btn
@@ -129,6 +141,7 @@
 
 <script>
 import firebase from "firebase";
+import bcrypt from 'bcryptjs';
 
 export default {
   created(){
@@ -159,11 +172,14 @@ export default {
       text: "",
       email: "",
       password: "",
+      passwordConfirm: "",
+      hash: "",
       owner: "",
       show: false,
-      sumbit: false,
+      showConfirm: false,
       firebaseImages: [],
       maxFileSize: 10000000,
+      isDisabled: false,
 
       rules: {
         required: (value) => !!value || "Nutné vyplnit.",
@@ -171,7 +187,7 @@ export default {
         email: (value) => {
           const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
           return pattern.test(value) || "Neplatný e-mail.";
-        },
+        },        
       },
 
       selectedManufacturer: "Alfa Romeo",
@@ -199,6 +215,17 @@ export default {
           console.log("Error getting document:", error);
       });
     },
+    getHashedPassword(){  
+      const password = this.password;
+      bcrypt.genSalt(10, (err, salt) => {
+        if (err) return err;
+        bcrypt.hash(password, salt, (err, hash) => {
+            // Store hash in DB.
+            if (err) return err;
+            this.hash = hash;
+        });
+      });
+    },
     async addItemToFirestore(){
       var db = firebase.firestore();
 
@@ -207,18 +234,20 @@ export default {
 
       await docRef.set({
         email: this.email.toLowerCase(),
-        password: this.password,
+        hash: this.hash,
         info: this.info,
         manu: this.selectedManufacturer,
         model: this.selectedModel,
         files: this.firebaseImages,
         owner: this.owner,
       }).then(() => {
-        alert("Vaše auto bylo úspěšně přidáno!")
+        alert("Vaše auto bylo úspěšně přidáno!");
         this.$router.push("/car/" + docRef.id);
       });
     },
     async uploadImagesToFirestore(){
+      this.isDisabled = true;
+      this.getHashedPassword();
       //Upload obrázků
       async function putStorageItem(item, firebaseImages, maxFileSize) {
         if(item.size < maxFileSize){
@@ -245,7 +274,7 @@ export default {
         // Array of "Promises"
         this.files.map(item => putStorageItem(item, this.firebaseImages, this.maxFileSize))
       )
-      .then((url) => {
+      .then(() => {
         console.log(`All success`);
         this.addItemToFirestore();
       })
@@ -254,9 +283,9 @@ export default {
       });
 
       return this.firebaseImages;
-    },
-    getHashedPassword(){
-
+    },    
+    passwordConfirmationRule() {
+      return () => (this.password === this.passwordConfirm) || 'Hesla se musí shodovat!'
     }
   },
 };

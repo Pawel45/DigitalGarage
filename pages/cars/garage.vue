@@ -44,6 +44,7 @@
                   :src="car.myImage"
                   max-height="210px"
                   contain
+                  style="hover"
                 ></v-img>
                 <v-card-title>{{car.manu}} {{car.model}}</v-card-title>
                 <v-card-subtitle></v-card-subtitle>
