@@ -21,7 +21,7 @@
               >
                 <v-img
                   :src="car.myImage"
-                  max-height="220px"
+                  max-height="210px"
                   contain
                   style="hover"
                 ></v-img>
@@ -53,7 +53,7 @@ export default {
     //Připojení databáze
     if (!firebase.apps.length) {
         firebase.initializeApp({
-          apiKey: 'AIzaSyDt1XVGdBpKqwb1v5zVDb663X-QNw5fvJs',
+          apiKey: process.env.VUE_APP_API_KEY,
           authDomain: 'carrate.firebaseapp.com',
           projectId: 'carrate',
           storageBucket: "carrate.appspot.com",
@@ -81,7 +81,7 @@ export default {
   },
   methods: {
     getFeatured(){
-      return this.featured.slice(0,5);
+      return this.featured.slice(0,4);
     }
   },
 };

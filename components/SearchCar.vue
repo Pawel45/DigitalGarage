@@ -56,7 +56,7 @@ export default {
     //Připojení databáze
     if (!firebase.apps.length) {
         firebase.initializeApp({
-          apiKey: 'AIzaSyDt1XVGdBpKqwb1v5zVDb663X-QNw5fvJs',
+          apiKey: process.env.VUE_APP_API_KEY,
           authDomain: 'carrate.firebaseapp.com',
           projectId: 'carrate',
           storageBucket: "carrate.appspot.com",

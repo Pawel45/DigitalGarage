@@ -50,7 +50,8 @@
           >
 
           <v-stepper-content step="2">
-            <p>Maximální velikost jedné fotografie je max <b>10MB</b>.</p>
+            <p><b>První</b> zvolená fotografie bude použita jako <b>náhledová</b>.</p>
+            <p>Maximální velikost jednoho souboru je maximálně <b>10MB</b>.</p>
             <v-file-input
               v-model="files"
               multiple
@@ -134,7 +135,7 @@ export default {
     //Připojení databáze
     if (!firebase.apps.length) {
         firebase.initializeApp({
-          apiKey: 'AIzaSyDt1XVGdBpKqwb1v5zVDb663X-QNw5fvJs',
+          apiKey: process.env.VUE_APP_API_KEY,
           authDomain: 'carrate.firebaseapp.com',
           projectId: 'carrate',
           storageBucket: "carrate.appspot.com",
