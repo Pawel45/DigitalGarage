@@ -21,10 +21,10 @@
           </v-carousel>
         </v-flex>
         <!-- WEB VERSION -->
-        <v-flex lg7 hidden-md-and-down text-center>
-          <!-- <v-icon >mdi-arrow-left</v-icon> -->
+        <v-flex lg7 hidden-md-and-down text-center class="mainImageContainer">
+          <v-icon size="30" @click="previousImage" color="black" class="arrow_left">mdi-arrow-left</v-icon>
           <img style="max-height: 50vh; max-width: 100%; border: 1px black solid;" :src="myImage" alt="" />
-          <!-- <v-icon >mdi-arrow-right</v-icon> -->
+          <v-icon size="30" @click="nextImage" color="black" class="arrow_right">mdi-arrow-right</v-icon>
         </v-flex>
         <v-flex lg5 hidden-md-and-down>
           <v-layout column wrap text-center>
@@ -33,7 +33,10 @@
                 v-for="(item, i) in files"
                 :key="i"
                 style="width: 150px; margin: 0 5px; border: 1px black solid;"
-                @mouseover="myImage = item"
+                @mouseover="() => {
+                  myImage = item;
+                  counter = i;
+                }"
                 :src="item"
                 alt=""
               />
@@ -115,11 +118,31 @@ export default {
       myImage: '',
       owner: '',
       value: 3,
+      counter: 0,
 
     }
   },
   methods: {
-    
+    nextImage(){
+      if(this.files[this.counter+1] != null){
+      this.myImage = this.files[this.counter+1];
+      this.counter++;
+      }
+      else {
+        this.myImage = this.files[0];
+        this.counter = 0;
+      }
+    },
+    previousImage(){
+      if(this.files[this.counter-1] != null){
+      this.myImage = this.files[this.counter-1];
+      this.counter--;
+      }
+      else {
+        this.myImage = this.files[this.files.length-1];
+        this.counter = this.files.length-1;
+      }
+    }
   },
   components: {},
 };
@@ -175,5 +198,28 @@ export default {
   font-family: 'Poppins', sans-serif !important;
   font-size: 24px;
   font-weight: 500;
+}
+
+.mainImageContainer{
+  position: relative;
+}
+
+.arrow_left{
+  position: absolute;
+  top: 50%;
+  left: 0;
+  opacity: 0.8;
+  background-color: rgb(212, 212, 212); 
+  border-radius: 50%;
+  transform: translate(50%, -50%);
+}
+.arrow_right{
+  position: absolute;
+  top: 50%;
+  right: 0;
+  opacity: 0.8;
+  background-color: rgb(212, 212, 212); 
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
 }
 </style>
