@@ -58,6 +58,7 @@ export default {
     
     if(this.$route.params.manu == "Všechny značky"){
       db.collection("cars")
+      .orderBy("created", "asc")
       .get()
       .then((querySnapshot) => {
           querySnapshot.forEach((doc) => {
@@ -68,6 +69,7 @@ export default {
               manu: doc.data().manu,
               model: doc.data().model,
               info: doc.data().info,
+              created: doc.data().created,
               myImage: doc.data().files[0],
             });
           });
@@ -79,6 +81,7 @@ export default {
 
     else if(this.$route.params.model == null){
       db.collection("cars").where("manu", "==", this.$route.params.manu)
+      .orderBy("created", "asc")
       .get()
       .then((querySnapshot) => {
           querySnapshot.forEach((doc) => {
@@ -89,6 +92,7 @@ export default {
               manu: doc.data().manu,
               model: doc.data().model,
               info: doc.data().info,
+              created: doc.data().created,
               myImage: doc.data().files[0],
             });
           });
@@ -99,6 +103,7 @@ export default {
     }
     else{
       db.collection("cars").where("manu", "==", this.$route.params.manu).where("model", "==", this.$route.params.model)
+      .orderBy("created", "asc")
       .get()
       .then((querySnapshot) => {
           querySnapshot.forEach((doc) => {
@@ -109,6 +114,7 @@ export default {
               manu: doc.data().manu,
               model: doc.data().model,
               info: doc.data().info,
+              created: doc.data().created,
               myImage: doc.data().files[0],
             });
           });
@@ -117,6 +123,7 @@ export default {
           console.log("Error getting documents: ", error);
       });
     }
+    console.log(this.result);
   },
   data() {
     return {
