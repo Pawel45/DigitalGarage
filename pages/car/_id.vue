@@ -17,6 +17,7 @@
               :src="item"
               :href="item"
               style="height: 100%; max-height: 70vh;"
+              contain
             ></v-carousel-item>
           </v-carousel>
         </v-flex>
