@@ -191,7 +191,7 @@ export default {
         },        
       },
 
-      selectedManufacturer: "Alfa Romeo",
+      selectedManufacturer: "Acura",
       selectedModel: "",
 
       manufacturers: [],
