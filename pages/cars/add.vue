@@ -241,6 +241,7 @@ export default {
         model: this.selectedModel,
         files: this.firebaseImages,
         owner: this.owner,
+        created: firebase.database.ServerValue.TIMESTAMP,
       }).then(() => {
         alert("Vaše auto bylo úspěšně přidáno!");
         this.$router.push("/car/" + docRef.id);
