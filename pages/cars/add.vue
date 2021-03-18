@@ -3,7 +3,6 @@
     <v-container id="main_container">
       <v-layout row wrap class="pa-2 my-6 fl1">
         <h1 class="head_title">Přidat Auto</h1>
-        <!-- <v-btn @click="addCar()">ADD</v-btn> -->
       </v-layout>
       <v-layout row wrap class="">
         <v-stepper v-model="e6" vertical non-linear style="width: 100%">
@@ -37,6 +36,7 @@
               ></v-select>
 
             <v-btn
+              aria-label="Continue"
               :disabled="selectedModel == ''"
               @click="e6 = 2"
               color="primary"
@@ -63,10 +63,10 @@
               style="width: 30%; min-width: 220px"
             ></v-file-input>
 
-            <v-btn :disabled="files == ''" @click="e6 = 3" color="primary"
+            <v-btn :disabled="files == ''" @click="e6 = 3" color="primary" aria-label="Continue"
               >Pokračovat</v-btn
             >
-            <v-btn @click="e6 = 1" text>Zpět</v-btn>
+            <v-btn @click="e6 = 1" text aria-label="Back">Zpět</v-btn>
           </v-stepper-content>
 
           <!-- STEP 3 -->
@@ -79,10 +79,10 @@
             <p><i>Rok výroby, tachometr, objem, výkon, výbava..</i></p>
             <v-textarea v-model="info" label="Informace"></v-textarea>
 
-            <v-btn :disabled="info == ''" @click="e6 = 4" color="primary"
+            <v-btn :disabled="info == ''" @click="e6 = 4" color="primary" aria-label="Continue"
               >Pokračovat</v-btn
             >
-            <v-btn @click="e6 = 2" text>Zpět</v-btn>
+            <v-btn @click="e6 = 2" text aria-label="Back">Zpět</v-btn>
           </v-stepper-content>
 
           <!-- STEP 4 -->
@@ -129,9 +129,10 @@
               :disabled="email == '' || password == '' || password.length < 8 || isDisabled || password != passwordConfirm"
               @click="uploadImagesToFirestore()"
               color="primary"
+              aria-label="Add"
               >Vložit</v-btn
             >
-            <v-btn @click="e6 = 3" text>Zpět</v-btn>
+            <v-btn @click="e6 = 3" text aria-label="Back">Zpět</v-btn>
           </v-stepper-content>
         </v-stepper>
       </v-layout>

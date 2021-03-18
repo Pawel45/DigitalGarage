@@ -35,7 +35,7 @@
                 v-model="selectedModel"
                 v-if="selectedManufacturer != ''"
               ></v-select>
-              <v-btn @click="find()" style="width: 100%">Vyhledat</v-btn>
+              <v-btn @click="find()" style="width: 100%" aria-label="Find">Vyhledat</v-btn>
             </v-flex>
           </v-layout>
         </v-flex>
