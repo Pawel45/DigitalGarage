@@ -72,7 +72,7 @@ export default {
   },
   data() {
     return {
-      selectedManufacturer: "Alfa Romeo",
+      selectedManufacturer: "Acura",
       selectedModel: "",
 
       manufacturers: [],
@@ -83,7 +83,7 @@ export default {
     getModels() {
       var db = firebase.firestore();
 
-      var docRef = db.collection("znacky").doc(this.selectedManufacturer);
+      var docRef = db.collection("znackyTest").doc(this.selectedManufacturer);
 
       docRef.get().then((doc) => {
           if (doc.exists) {

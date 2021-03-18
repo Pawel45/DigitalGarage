@@ -156,7 +156,7 @@ export default {
       }else { firebase.app();}
     var db = firebase.firestore();
 
-    db.collection("znacky").get().then((querySnapshot) => {
+    db.collection("znackyTest").get().then((querySnapshot) => {
     querySnapshot.forEach((doc) => {
         // doc.data() is never undefined for query doc snapshots
         console.log(doc.id, " => ", doc.data());
