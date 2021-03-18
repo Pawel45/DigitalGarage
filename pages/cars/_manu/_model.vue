@@ -9,7 +9,7 @@
       </v-layout>
       
       <v-layout row>
-          <v-flex lg3 mb-8 v-for="car in result"
+          <v-flex lg3 mb-8 v-for="car in resultSliced"
             :key="car.id">
             <v-hover v-slot="{ hover }">
               <v-card
@@ -30,12 +30,21 @@
                 <v-card-subtitle>{{car.info.slice(0, 30)}} ...</v-card-subtitle>
                 <v-card-actions>
                   <v-spacer></v-spacer>
-                  <v-btn :to="'car/' + car.id" color="#1f3e74" text aria-label="Inspect">Prohlédnout</v-btn>
+                  <v-btn :to="'/car/' + car.id" color="#1f3e74" text aria-label="Inspect">Prohlédnout</v-btn>
                 </v-card-actions>
               </v-card>
             </v-hover>
           </v-flex>
         </v-layout>
+
+        <v-layout row justify-center mb-5>
+          <div class="text-center">
+          <v-pagination
+            v-model="page"
+            :length="getPaginationLenght()"
+          ></v-pagination>
+        </div>
+      </v-layout>
     </v-container>
   </v-app>
 </template>
@@ -123,14 +132,34 @@ export default {
           console.log("Error getting documents: ", error);
       });
     }
+    this.getResultSliced();
     console.log(this.result);
   },
   data() {
     return {
       result: [],
+      resultSliced: [],
+      page: 1,
     };
   },
   methods: {
+    getPaginationLenght(){
+      var lenght = Math.ceil(this.result.length/4);
+      console.log(lenght);
+      return lenght;
+    },
+    getResultSliced(){
+      for (let i = 0; i <= this.result.length; i++) {
+        var temp = [];
+        for (let index = 4 * i; index <= (4 * (i+1)); index++) {
+          temp.push(this.result[index]);
+          
+          console.log(temp + "DEBILE");
+        }
+        this.resultSliced.push(temp);
+      }
+      this.resultSliced = this.result;
+    }
   },
   components: {},
 };

@@ -29,7 +29,7 @@
                 <v-card-subtitle>{{car.info.slice(0, 30)}} ...</v-card-subtitle>
                 <v-card-actions>
                   <v-spacer></v-spacer>
-                  <v-btn :to="'car/' + car.id" color="#1f3e74" text aria-label="Inspect">Prohlédnout</v-btn>
+                  <v-btn :to="'/car/' + car.id" color="#1f3e74" text aria-label="Inspect">Prohlédnout</v-btn>
                 </v-card-actions>
               </v-card>
             </v-hover>
