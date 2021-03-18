@@ -9,7 +9,7 @@
       </v-layout>
       
       <v-layout row>
-          <v-flex lg3 mb-3 v-for="car in result"
+          <v-flex lg3 mb-8 v-for="car in result"
             :key="car.id">
             <v-hover v-slot="{ hover }">
               <v-card
@@ -54,26 +54,69 @@ export default {
           storageBucket: "carrate.appspot.com",
         });
       }else { firebase.app();}
-    var db = firebase.firestore();
-
-    db.collection("cars").where("manu", "==", this.$route.params.manu).where("model", "==", this.$route.params.model)
-    .get()
-    .then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-            // doc.data() is never undefined for query doc snapshots
-            console.log(doc.id, " => ", doc.data());
-            this.result.push({
-            id: doc.id,
-            manu: doc.data().manu,
-            model: doc.data().model,
-            info: doc.data().info,
-            myImage: doc.data().files[0],
+    var db = firebase.firestore(); 
+    
+    if(this.$route.params.manu == "Všechny značky"){
+      db.collection("cars")
+      .get()
+      .then((querySnapshot) => {
+          querySnapshot.forEach((doc) => {
+              // doc.data() is never undefined for query doc snapshots
+              console.log(doc.id, " => ", doc.data());
+              this.result.push({
+              id: doc.id,
+              manu: doc.data().manu,
+              model: doc.data().model,
+              info: doc.data().info,
+              myImage: doc.data().files[0],
+            });
           });
-        });
-    })
-    .catch((error) => {
-        console.log("Error getting documents: ", error);
-    });
+      })
+      .catch((error) => {
+          console.log("Error getting documents: ", error);
+      });
+    }
+
+    else if(this.$route.params.model == null){
+      db.collection("cars").where("manu", "==", this.$route.params.manu)
+      .get()
+      .then((querySnapshot) => {
+          querySnapshot.forEach((doc) => {
+              // doc.data() is never undefined for query doc snapshots
+              console.log(doc.id, " => ", doc.data());
+              this.result.push({
+              id: doc.id,
+              manu: doc.data().manu,
+              model: doc.data().model,
+              info: doc.data().info,
+              myImage: doc.data().files[0],
+            });
+          });
+      })
+      .catch((error) => {
+          console.log("Error getting documents: ", error);
+      });
+    }
+    else{
+      db.collection("cars").where("manu", "==", this.$route.params.manu).where("model", "==", this.$route.params.model)
+      .get()
+      .then((querySnapshot) => {
+          querySnapshot.forEach((doc) => {
+              // doc.data() is never undefined for query doc snapshots
+              console.log(doc.id, " => ", doc.data());
+              this.result.push({
+              id: doc.id,
+              manu: doc.data().manu,
+              model: doc.data().model,
+              info: doc.data().info,
+              myImage: doc.data().files[0],
+            });
+          });
+      })
+      .catch((error) => {
+          console.log("Error getting documents: ", error);
+      });
+    }
   },
   data() {
     return {

@@ -34,6 +34,7 @@
                 solo
                 v-model="selectedModel"
                 v-if="selectedManufacturer != ''"
+                :disabled="selectedManufacturer == 'Všechny značky'"                
               ></v-select>
               <v-btn @click="find()" style="width: 100%" aria-label="Find">Vyhledat</v-btn>
             </v-flex>
@@ -72,10 +73,10 @@ export default {
   },
   data() {
     return {
-      selectedManufacturer: "Acura",
-      selectedModel: "",
+      selectedManufacturer: 'Všechny značky',
+      selectedModel: '',
 
-      manufacturers: [],
+      manufacturers: ["Všechny značky"],
       models: [],
     };
   },
@@ -98,11 +99,14 @@ export default {
       });
     },
     find(){
-      if(this.selectedModel != '') {
-        // this.$store.dispatch("changeFilter", {manu: this.selectedManufacturer.manu, model: this.selectedModel.name});
-        this.$router.push("cars/" + this.selectedManufacturer + "/" + this.selectedModel);
-      }
-      else this.$router.push("/");
+      // Tlačítko povolené jen při výberu obou kategorií
+      // if(this.selectedModel != '') {
+      //   // this.$store.dispatch("changeFilter", {manu: this.selectedManufacturer.manu, model: this.selectedModel.name});
+      //   this.$router.push("cars/" + this.selectedManufacturer + "/" + this.selectedModel);
+      // }
+      // else this.$router.push("/");
+
+      this.$router.push("cars/" + this.selectedManufacturer + "/" + this.selectedModel);
     }
   },
 };
