@@ -8,7 +8,7 @@
           <v-spacer></v-spacer>
         </v-layout>
         <v-layout row>
-          <v-flex lg3 mb-3 v-for="car in getFeatured()"
+          <v-flex lg3 mb-3 v-for="car in featured"
             :key="car.id">
             <v-hover v-slot="{ hover }">
               <v-card
@@ -21,7 +21,7 @@
               >
                 <v-img
                   :src="car.myImage"
-                  max-height="210px"
+                  height="210px"
                   contain
                   style="hover"
                 ></v-img>
@@ -61,7 +61,7 @@ export default {
       }else { firebase.app();}
     var db = firebase.firestore();
 
-    db.collection("cars").get().then((querySnapshot) => {
+    db.collection("cars").limit(4).get().then((querySnapshot) => {
       querySnapshot.forEach((doc) => {
           console.log(doc.id, " => ", doc.data());
           this.featured.push({
@@ -80,9 +80,6 @@ export default {
     }
   },
   methods: {
-    getFeatured(){
-      return this.featured.slice(0,4);
-    }
   },
 };
 </script>

@@ -9,7 +9,7 @@
       </v-layout>
       
       <v-layout row>
-          <v-flex lg3 mb-8 v-for="car in resultSliced"
+          <v-flex lg3 mb-8 v-for="car in result.slice(page * resultsOnPage - resultsOnPage, page * resultsOnPage)"
             :key="car.id">
             <v-hover v-slot="{ hover }">
               <v-card
@@ -22,7 +22,7 @@
               >
                 <v-img
                   :src="car.myImage"
-                  max-height="210px"
+                  height="210px"
                   contain
                   style="hover"
                 ></v-img>
@@ -67,7 +67,7 @@ export default {
     
     if(this.$route.params.manu == "Všechny značky"){
       db.collection("cars")
-      .orderBy("created", "asc")
+      .orderBy("created", "desc")
       .get()
       .then((querySnapshot) => {
           querySnapshot.forEach((doc) => {
@@ -90,7 +90,7 @@ export default {
 
     else if(this.$route.params.model == null){
       db.collection("cars").where("manu", "==", this.$route.params.manu)
-      .orderBy("created", "asc")
+      .orderBy("created", "desc")
       .get()
       .then((querySnapshot) => {
           querySnapshot.forEach((doc) => {
@@ -112,7 +112,7 @@ export default {
     }
     else{
       db.collection("cars").where("manu", "==", this.$route.params.manu).where("model", "==", this.$route.params.model)
-      .orderBy("created", "asc")
+      .orderBy("created", "desc")
       .get()
       .then((querySnapshot) => {
           querySnapshot.forEach((doc) => {
@@ -131,35 +131,20 @@ export default {
       .catch((error) => {
           console.log("Error getting documents: ", error);
       });
-    }
-    this.getResultSliced();
-    console.log(this.result);
+    }    
   },
   data() {
     return {
       result: [],
-      resultSliced: [],
+      resultsOnPage: 8,
       page: 1,
     };
   },
   methods: {
     getPaginationLenght(){
-      var lenght = Math.ceil(this.result.length/4);
-      console.log(lenght);
+      var lenght = Math.ceil(this.result.length/8);
       return lenght;
-    },
-    getResultSliced(){
-      for (let i = 0; i <= this.result.length; i++) {
-        var temp = [];
-        for (let index = 4 * i; index <= (4 * (i+1)); index++) {
-          temp.push(this.result[index]);
-          
-          console.log(temp + "DEBILE");
-        }
-        this.resultSliced.push(temp);
-      }
-      this.resultSliced = this.result;
-    }
+    }, 
   },
   components: {},
 };

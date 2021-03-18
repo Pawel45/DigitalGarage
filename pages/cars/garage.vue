@@ -42,7 +42,7 @@
               >
                 <v-img
                   :src="car.myImage"
-                  max-height="210px"
+                  height="210px"
                   contain
                   style="hover"
                 ></v-img>
