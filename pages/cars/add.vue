@@ -283,8 +283,6 @@ export default {
       .catch((error) => {
         console.log(`Some failed: `, error.message)
       });
-
-      return this.firebaseImages;
     },    
     passwordConfirmationRule() {
       return () => (this.password === this.passwordConfirm) || 'Hesla se musí shodovat!'

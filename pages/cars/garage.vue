@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-container id="main_container">
+    <v-container id="main_container"  grid-list-md>
       <v-layout row wrap class="pa-2 my-6 fl1">
         <h1 class="head_title">Moje Garáž</h1>
       </v-layout>

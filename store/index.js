@@ -1,26 +1,22 @@
 export const state = () => ({
-    filters: {
-        manufacturer: '',
-        model: '',
-    },
+    valid: false,
   })
 
 export const mutations = {
-    changeFilters(state, {manu, model}){
-        state.filters.manufacturer = manu;
-        state.filters.model = model;
+    validChange(state, temp){
+        state.valid = temp;
     },
   }
 
 export const actions = {
-    changeFilter(state, {manu, model}){
-        state.commit("changeFilters", {manu, model})
+    validChange(state, temp){
+        state.commit("validChange", temp)
     },
 }
 
 export const getters = {
-    getFilters(state){
-        return state.filters;
+    getValidation(state){
+        return state.valid;
     },
 
 }

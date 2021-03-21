@@ -4,7 +4,9 @@
       <v-layout row wrap class="pa-2 my-4 fl1">
         <h1 class="head_title">{{this.manu}} {{this.model}}</h1>
         <v-spacer></v-spacer>
-        <!-- <h4>ID: {{ this.$route.params.id }}</h4> -->
+        <div style="display:flex; justify-content: center; align-items: center; overflow: none;">
+            <v-icon @click="edit()" size="25" title="Upravit" color="black">mdi-wrench</v-icon>
+        </div>
       </v-layout>
       <v-layout row>
         <!-- MOBILE VERSION -->
@@ -54,7 +56,7 @@
         <v-flex class="basicText">
           <p v-if="this.owner != ''">Majitel: {{this.owner}}</p>
         </v-flex>
-        <v-flex mb-5 align-self-center text-center>
+        <!-- <v-flex mb-5 align-self-center text-center>
           <h2 class="basicText">VAŠE HODNOCENÍ</h2>
           <v-rating
           color="yellow"
@@ -67,7 +69,7 @@
             size="32"
             value=3
           ></v-rating>
-        </v-flex>
+        </v-flex> -->
       </v-layout>
     </v-container>
   </v-app>
@@ -143,6 +145,9 @@ export default {
         this.myImage = this.files[this.files.length-1];
         this.counter = this.files.length-1;
       }
+    },
+    edit(){
+        this.$router.push("/car/" + this.$route.params.id + "/edit");
     }
   },
   components: {},
